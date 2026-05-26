@@ -1,0 +1,76 @@
+---
+// src/components/RSVP.astro
+---
+
+<section class="bg-[#f5f5f0] py-24 px-4 text-center">
+  <div class="max-w-2xl mx-auto space-y-12">
+    
+    <div class="space-y-4">
+      <h2 class="font-script text-6xl md:text-8xl text-brand-wine-dark drop-shadow-sm leading-tight">
+        Confirmación de<br/>
+        Asistencia
+      </h2>
+      <p class="font-sans text-xs md:text-sm leading-loose tracking-[0.15em] uppercase text-brand-wine/80">
+        Para asegurar tu lugar y celebrar juntos este día tan especial, te pedimos amablemente confirmar tu asistencia realizando el pago de:
+      </p>
+      <p class="font-serif text-2xl tracking-[0.2em] text-brand-wine-dark mt-6 font-semibold">
+        $300 MXN
+      </p>
+      <p class="font-sans text-[10px] md:text-xs tracking-widest uppercase text-brand-wine/60 mt-2">
+        A más tardar el [Día y Mes Límite]
+      </p>
+      <p class="font-sans text-xs leading-loose tracking-[0.1em] uppercase text-brand-wine/80 mt-8 max-w-md mx-auto border-t border-brand-wine/10 pt-6">
+        Comparte tu comprobante de pago con nosotros para que tu lugar quede oficialmente registrado.
+      </p>
+    </div>
+
+    {/* RSVP Form to WhatsApp */}
+    <div class="bg-white p-8 md:p-12 shadow-xl border border-gray-100 rounded-sm mt-12 relative overflow-hidden group">
+      <div class="absolute inset-0 bg-brand-wine opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none"></div>
+      
+      <form id="rsvp-form" class="space-y-6 max-w-sm mx-auto relative z-10 text-left">
+        <div class="space-y-2">
+          <label for="name" class="block font-serif text-sm tracking-widest text-brand-wine uppercase">Nombre Completo</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            required 
+            placeholder="Ej. Juan Pérez"
+            class="w-full bg-gray-50 border border-gray-200 text-brand-wine text-sm rounded-none focus:ring-brand-gold focus:border-brand-gold block p-3 transition-colors outline-none"
+          >
+        </div>
+        
+        <button 
+          type="submit" 
+          class="w-full bg-brand-wine hover:bg-brand-wine-dark text-white font-serif tracking-[0.2em] uppercase text-sm py-4 px-6 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+        >
+          Enviar Comprobante
+        </button>
+      </form>
+    </div>
+
+    <div class="mt-20 pt-10">
+      <p class="font-script text-4xl text-brand-wine mb-2">Con amor,</p>
+      <p class="font-serif tracking-[0.2em] text-lg text-brand-wine uppercase">Sebastián & Daniela</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('rsvp-form');
+  // Placeholder phone number - replace with the actual number
+  const phoneNumber = '520000000000'; 
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nameInput = document.getElementById('name') as HTMLInputElement;
+    const name = nameInput.value;
+    
+    if (name) {
+      const message = encodeURIComponent(`¡Hola! Quiero confirmar mi asistencia, soy ${name}. Aquí está mi comprobante:`);
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+      window.open(whatsappUrl, '_blank');
+    }
+  });
+</script>

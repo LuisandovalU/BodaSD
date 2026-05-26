@@ -1,0 +1,47 @@
+---
+import ColorPalette from './ColorPalette';
+
+const ladiesColors = ['#f2e176', '#6b8233', '#8f623e', '#d8a7c2'];
+const gentsColors = ['#0a3791', '#6b8233', '#8f623e', '#75787b'];
+const bannedColors = ['#000000', '#7b1113'];
+---
+
+<section className="bg-[#e9e9e6] py-24 px-4 text-center">
+  <div class="max-w-4xl mx-auto bg-white/40 backdrop-blur-md p-8 md:p-16 rounded-sm shadow-xl border border-white">
+    <h2 class="font-script text-6xl md:text-8xl text-brand-wine-dark mb-6">Dress Code</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mt-16 text-brand-wine-dark relative">
+      
+      {/* Divider line for desktop */}
+      <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-brand-wine/10 transform -translate-x-1/2"></div>
+
+      {/* Ladies */}
+      <div class="space-y-8">
+        <h3 class="font-serif tracking-[0.2em] text-xl uppercase font-semibold">For the Ladies</h3>
+        <p class="font-sans text-xs md:text-sm leading-loose tracking-widest uppercase opacity-80 max-w-sm mx-auto">
+          Para celebrar esta gran noche, la etiqueta es gala formal con vestido largo. Por favor, consulten en la parte de abajo la guía con los colores recomendados para su atuendo y aquellos que se deben evitar.
+        </p>
+        <div class="pt-4">
+          <ColorPalette client:visible colors={ladiesColors} title="Colores Sugeridos" />
+        </div>
+      </div>
+
+      {/* Gentlemen */}
+      <div class="space-y-8">
+        <h3 class="font-serif tracking-[0.2em] text-xl uppercase font-semibold">For the Gentleman</h3>
+        <p class="font-sans text-xs md:text-sm leading-loose tracking-widest uppercase opacity-80 max-w-sm mx-auto">
+          Nuestra etiqueta es gala formal. Les pedimos amablemente lucir un traje elegante, omitiendo por completo el color negro. En la parte inferior podrán encontrar nuestra guía con los tonos sugeridos y los colores que les pedimos evitar.
+        </p>
+        <div class="pt-4">
+          <ColorPalette client:visible colors={gentsColors} title="Colores Sugeridos" />
+        </div>
+      </div>
+    </div>
+
+    {/* Banned Colors */}
+    <div class="mt-20 pt-16 border-t border-brand-wine/10">
+      <ColorPalette client:visible colors={bannedColors} title="No Permitidos" isBanned={true} />
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,32 @@
+---
+import EnvelopeRain from './EnvelopeRain';
+---
+
+<section class="bg-brand-wine text-white py-24 px-4 text-center relative overflow-hidden">
+  
+  <div class="max-w-3xl mx-auto space-y-24 relative z-10">
+    
+    {/* Importante */}
+    <div class="space-y-6">
+      <h2 class="font-script text-6xl md:text-7xl text-brand-gold-light drop-shadow-sm">Importante</h2>
+      <p class="font-sans text-xs md:text-sm leading-loose tracking-[0.15em] uppercase opacity-90 max-w-xl mx-auto">
+        Para que todos podamos disfrutar y celebrar al máximo, nuestro evento será exclusivamente para adultos. Agradecemos tu comprensión para dejar a los niños en casa.
+      </p>
+    </div>
+
+    {/* Regalos */}
+    <div class="bg-white/5 backdrop-blur-sm p-10 md:p-16 border border-white/10 rounded-sm relative overflow-hidden">
+      {/* Client-side Envelope Rain Animation */}
+      <EnvelopeRain client:visible />
+      
+      <div class="relative z-10 space-y-6">
+        <h2 class="font-script text-6xl md:text-7xl text-brand-gold-light drop-shadow-sm">Regalos</h2>
+        <p class="font-sans text-xs md:text-sm leading-loose tracking-[0.15em] uppercase opacity-90 max-w-xl mx-auto">
+          Tu presencia es nuestro mayor regalo. Si deseas aportar a este nuevo comienzo, contaremos con lluvia de sobres.
+        </p>
+      </div>
+    </div>
+    
+  </div>
+  
+</section>

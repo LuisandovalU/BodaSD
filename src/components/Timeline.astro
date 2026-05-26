@@ -1,0 +1,42 @@
+---
+import TimelineItem from './TimelineItem';
+
+const events = [
+  { title: 'Recepción', time: '2:00 PM', iconName: 'wine' as const },
+  { title: 'Ceremonia', time: '2:00 PM', iconName: 'gem' as const },
+  { title: 'Comida', time: '2:00 PM', iconName: 'utensils' as const },
+  { title: 'Cake Cutting', time: '2:00 PM', iconName: 'cake' as const },
+  { title: 'Party', time: '2:00 PM', iconName: 'party' as const },
+];
+---
+
+<section className="bg-brand-wine py-24 px-4 overflow-hidden relative">
+  {/* Decorative Background Elements */}
+  <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+  
+  <div class="max-w-4xl mx-auto relative z-10">
+    <div class="text-center mb-20">
+      <h2 class="font-script text-6xl md:text-8xl text-white mb-6 drop-shadow-sm">The Evening</h2>
+      <p class="font-sans text-xs md:text-sm tracking-[0.2em] leading-loose text-white/80 uppercase max-w-xl mx-auto">
+        Los momentos más importantes de nuestro gran día, donde cada instante será más especial a tu lado
+      </p>
+    </div>
+
+    <div class="relative max-w-lg mx-auto">
+      {/* Vertical Line */}
+      <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-brand-wine via-white/40 to-brand-wine"></div>
+      
+      <div class="py-10">
+        {events.map((event, index) => (
+          <TimelineItem 
+            client:visible 
+            title={event.title} 
+            time={event.time} 
+            iconName={event.iconName} 
+            index={index} 
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
