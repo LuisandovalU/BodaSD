@@ -1,60 +1,98 @@
 ---
-// src/components/Hero.astro
+import { Image } from 'astro:assets';
+
+// Cuando subas tus imágenes a src/assets, puedes importarlas así:
+// import envelopeBg from '../assets/envelope-bg.jpg';
+// import flowerImg from '../assets/flower.png';
+// import fotoNovios from '../assets/foto-novios.jpg';
 ---
 
-<section class="relative min-h-screen flex flex-col items-center justify-between pb-20 overflow-hidden bg-brand-wine">
-  <!-- Background Image with Gradient Fade -->
-  <div class="absolute inset-0 z-0 h-[70vh] md:h-[80vh]">
+<section class="flex flex-col w-full bg-[#750b1c] overflow-hidden">
+  
+  <div class="relative w-full flex flex-col items-center">
+    
+    {/* PARTE 1: Fondo verde con el sobre (hero.webp) */}
+    <div class="w-full h-[60vh] md:h-[70vh] relative overflow-hidden">
+      <img src="/hero.webp" alt="Fondo Verde Sobre" class="w-full h-full object-cover object-bottom opacity-100 animate-slow-zoom origin-center" onerror="this.style.display='none'" />
+      {/* Gradiente oscuro sutil para darle profundidad */}
+      <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 mix-blend-overlay"></div>
+    </div>
+
+    {/* PARTE 2: Flor y Detalles de Fecha/Lugar */}
+    <div class="w-full relative flex flex-col items-center">
+      {/* Imagen de la Flor */}
+      <img src="/flor.webp" alt="Flor" class="w-full object-cover" onerror="this.style.display='none'" />
+
+      {/* Texto Detalles superpuesto en la flor */}
+      <div class="absolute bottom-12 md:bottom-20 z-10 text-center space-y-4 md:space-y-6 text-brand-ivory w-full px-4">
+        <p class="font-serif tracking-[0.4em] text-sm md:text-base uppercase">Viernes 11</p>
+        <p class="font-sans tracking-[0.2em] text-sm font-light">2 : 0 0 P M</p>
+        <p class="font-serif tracking-[0.3em] text-xs md:text-sm uppercase leading-loose">
+          Hacienda San Pablo<br/>
+          <span class="text-[10px] md:text-xs tracking-[0.4em]">Subachoque . Colombia</span>
+        </p>
+      </div>
+    </div>
+
+    {/* PARTE 3: Tarjeta Blanca ("Save our Date") - Flotando entre ambas secciones */}
+    <div class="absolute top-[25vh] md:top-[30vh] left-0 w-full flex justify-center z-10">
+      <div class="w-[85%] max-w-sm aspect-[3/4] p-10 flex flex-col items-center justify-between shadow-luxury rounded-sm overflow-hidden bg-[#faf8f5] animate-float">
+        {/* Textura de la tarjeta */}
+        <div class="absolute inset-0 z-0">
+           <img src="/sobre.webp" alt="Textura Tarjeta" class="w-full h-full object-cover opacity-80" onerror="this.style.display='none'" />
+           <div class="absolute inset-0 bg-gradient-to-tr from-[#faf8f5]/80 via-[#faf8f5]/40 to-[#faf8f5]/90"></div> 
+        </div>
+
+        <div class="relative z-10 flex flex-col items-center h-full justify-between w-full">
+          <p class="font-serif tracking-[0.4em] text-[#5e0a16] text-sm mt-4 font-semibold animate-fade-up delay-100">S & D</p>
+          
+          <div class="text-center flex flex-col items-center justify-center w-full my-4 animate-fade-up delay-300">
+            <img 
+              src="/save-our-date.webp" 
+              alt="Save our Date" 
+              class="w-full max-w-[200px] md:max-w-[260px] h-auto object-contain" 
+              onerror="this.style.display='none'"
+            />
+          </div>
+
+          <p class="font-serif tracking-[0.4em] text-[#5e0a16] text-sm mb-4 font-semibold animate-fade-up delay-700">
+            11 . 12 . 26
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  {/* PARTE 3: Foto de los Novios (Placeholder) */}
+  <div class="w-full h-[60vh] md:h-[80vh] relative bg-black">
+    {/* Ya que usamos hero.webp arriba, aquí dejamos un placeholder hasta que suban la foto de novios */}
     <img 
       src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2000&auto=format&fit=crop" 
       alt="Sebastián y Daniela" 
-      class="w-full h-full object-cover object-center"
+      class="w-full h-full object-cover object-center opacity-80"
     />
-    <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-brand-wine"></div>
-  </div>
-
-  <!-- Top Content (Names) -->
-  <div class="z-10 text-center text-white px-4 pt-24 md:pt-32 w-full">
-    <div class="inline-block px-8 py-10 bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl rounded-sm">
-      <p class="font-serif tracking-[0.3em] text-sm uppercase mb-6 text-brand-gold-light">S & D</p>
-      <h1 class="font-script text-7xl md:text-8xl leading-tight text-white drop-shadow-md">
-        Sebastián
-        <br/>
-        <span class="text-4xl md:text-5xl text-brand-gold-light opacity-80">&</span>
-        <br/>
-        Daniela
-      </h1>
-      <p class="mt-8 font-serif text-lg tracking-[0.2em] uppercase text-brand-gold-light">
-        11 . 12 . 26
-      </p>
-    </div>
-  </div>
-
-  <!-- Bottom Content (Details & Welcome) -->
-  <div class="z-10 text-center px-6 mt-16 md:mt-24 w-full max-w-2xl mx-auto flex flex-col items-center space-y-12">
     
-    <div class="space-y-4">
-      <p class="font-serif tracking-[0.2em] text-brand-gold-light uppercase text-sm md:text-base">Viernes 11</p>
-      <p class="font-sans tracking-widest text-white/90 text-sm">2:00 PM</p>
-      <p class="font-serif tracking-[0.15em] text-brand-gold-light uppercase text-sm md:text-base leading-relaxed">
-        Hacienda San Pablo<br/>
-        <span class="text-xs tracking-widest text-white/70">Subachoque . Colombia</span>
-      </p>
+    {/* Nombres sobre la foto */}
+    <div class="absolute bottom-10 left-0 w-full text-center z-10 px-4">
+       <h2 class="font-script text-6xl md:text-8xl text-white drop-shadow-lg leading-[0.7]">
+          <span class="block -ml-10">Sebastián</span>
+          <span class="block font-serif text-3xl md:text-4xl text-brand-ivory/80 -ml-20 my-2">&</span>
+          <span class="block ml-16">Daniela</span>
+       </h2>
     </div>
-
-    <div class="bg-brand-ivory text-brand-wine p-8 md:p-12 rounded-sm shadow-xl relative w-full overflow-hidden">
-      <!-- Decorative flower element (placeholder for the white anthurium) -->
-      <div class="absolute -top-10 -right-10 opacity-10 pointer-events-none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-flower-2"><path d="M12 5.5c.135-1.189.655-2.288 1.488-3.12a3.53 3.53 0 0 1 5.372 4.544"/><path d="M18.86 6.924a4.42 4.42 0 0 1-.41 5.56l-6.45 6.45a2 2 0 0 1-2.828 0l-6.45-6.45a4.42 4.42 0 0 1 6.25-6.25l3.89 3.89"/><path d="M12 5.5v13"/><path d="M12 18.5c-.135 1.189-.655 2.288-1.488 3.12a3.53 3.53 0 0 1-5.372-4.544"/></svg>
-      </div>
-      
-      <h2 class="font-serif text-2xl md:text-3xl tracking-widest text-brand-wine-dark uppercase mb-6">
-        Con todo nuestro cariño
-      </h2>
-      <p class="font-sans text-xs md:text-sm leading-loose tracking-[0.15em] uppercase text-brand-wine/80">
-        Bienvenidos al inicio de nuestra mejor aventura. Tu presencia hará que este momento sea verdaderamente inolvidable.
-      </p>
-    </div>
-
   </div>
+
+  {/* PARTE 4: Mensaje de Bienvenida */}
+  <div class="w-full bg-[#750b1c] py-20 px-6 flex justify-center">
+    <div class="bg-brand-ivory w-full max-w-lg p-12 text-center shadow-2xl relative">
+      <h3 class="font-serif text-xl md:text-2xl tracking-[0.1em] text-brand-wine-dark uppercase font-bold mb-6">
+        Con todo nuestro cariño
+      </h3>
+      <p class="font-sans text-[10px] md:text-xs leading-[2.5] tracking-[0.2em] uppercase text-brand-wine-dark/80">
+        Bienvenidos al inicio de<br/>nuestra mejor aventura. Tu<br/>presencia hará que este<br/>momento sea verdaderamente<br/>inolvidable.
+      </p>
+    </div>
+  </div>
+
 </section>

@@ -7,8 +7,8 @@
   --color-brand-gold: #c5a059;
   --color-brand-gold-light: #e2c589;
   
-  --font-serif: 'Playfair Display', serif;
-  --font-script: 'Great Vibes', cursive;
+  --font-serif: 'Cinzel', serif;
+  --font-script: 'Alex Brush', cursive;
   --font-sans: 'Inter', sans-serif;
 }
 
@@ -21,5 +21,52 @@
     color: var(--color-brand-wine);
     font-family: var(--font-sans);
     overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .animate-slow-zoom {
+    animation: slow-zoom 20s ease-out forwards;
+  }
+  
+  .animate-fade-up {
+    animation: fade-up 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .delay-100 { animation-delay: 100ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-500 { animation-delay: 500ms; }
+  .delay-700 { animation-delay: 700ms; }
+
+  @keyframes slow-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.08); }
+  }
+
+  @keyframes fade-up {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .shadow-luxury {
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+      0 10px 25px -5px rgba(0, 0, 0, 0.3),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.7), 
+      inset 0 4px 15px rgba(255, 255, 255, 0.8);
   }
 }
