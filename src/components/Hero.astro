@@ -12,16 +12,16 @@ import { Image } from 'astro:assets';
   <div class="relative w-full flex flex-col items-center">
     
     {/* PARTE 1: Fondo verde con el sobre (hero.webp) */}
-    <div class="w-full h-[60vh] md:h-[70vh] relative overflow-hidden">
-      <img src="/hero.webp" alt="Fondo Verde Sobre" class="w-full h-full object-cover object-bottom opacity-100 animate-slow-zoom origin-center" onerror="this.style.display='none'" />
+    <div class="w-full h-[60vh] md:h-[70vh] relative overflow-hidden bg-[#3a4f3b]">
+      <img src="/hero.webp" alt="Fondo Verde Sobre" class="w-full h-full object-cover object-bottom opacity-100 animate-slow-zoom origin-center" onerror="this.style.display='none'" loading="eager" fetchpriority="high" />
       {/* Gradiente oscuro sutil para darle profundidad */}
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 mix-blend-overlay"></div>
     </div>
 
     {/* PARTE 2: Flor y Detalles de Fecha/Lugar */}
-    <div class="w-full relative flex flex-col items-center">
+    <div class="w-full relative flex flex-col items-center bg-[#750b1c]">
       {/* Imagen de la Flor */}
-      <img src="/flor.webp" alt="Flor" class="w-full object-cover" onerror="this.style.display='none'" />
+      <img src="/flor.webp" alt="Flor" class="w-full object-cover" onerror="this.style.display='none'" loading="eager" />
 
       {/* Texto Detalles superpuesto en la flor */}
       <div class="absolute bottom-12 md:bottom-20 z-10 text-center space-y-4 md:space-y-6 text-brand-ivory w-full px-4">
@@ -38,8 +38,8 @@ import { Image } from 'astro:assets';
     <div class="absolute top-[25vh] md:top-[30vh] left-0 w-full flex justify-center z-10">
       <div class="w-[85%] max-w-sm aspect-[3/4] p-10 flex flex-col items-center justify-between shadow-luxury rounded-sm overflow-hidden bg-[#faf8f5] animate-float">
         {/* Textura de la tarjeta */}
-        <div class="absolute inset-0 z-0">
-           <img src="/sobre.webp" alt="Textura Tarjeta" class="w-full h-full object-cover opacity-80" onerror="this.style.display='none'" />
+        <div class="absolute inset-0 z-0 bg-[#faf8f5]">
+           <img src="/sobre.webp" alt="Textura Tarjeta" class="w-full h-full object-cover opacity-80" onerror="this.style.display='none'" loading="eager" fetchpriority="high" />
            <div class="absolute inset-0 bg-gradient-to-tr from-[#faf8f5]/80 via-[#faf8f5]/40 to-[#faf8f5]/90"></div> 
         </div>
 
@@ -52,6 +52,8 @@ import { Image } from 'astro:assets';
               alt="Save our Date" 
               class="w-full max-w-[200px] md:max-w-[260px] h-auto object-contain" 
               onerror="this.style.display='none'"
+              loading="eager"
+              fetchpriority="high"
             />
           </div>
 
