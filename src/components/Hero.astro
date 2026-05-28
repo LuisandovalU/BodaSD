@@ -25,9 +25,9 @@ import { Image } from 'astro:assets';
 
       {/* Texto Detalles superpuesto en la flor */}
       <div class="absolute bottom-12 md:bottom-20 z-10 text-center space-y-4 md:space-y-6 text-brand-ivory w-full px-4">
-        <p class="font-serif tracking-[0.4em] text-sm md:text-base uppercase">Viernes 11</p>
-        <p class="font-sans tracking-[0.2em] text-sm font-light">2 : 0 0 P M</p>
-        <p class="font-serif tracking-[0.3em] text-xs md:text-sm uppercase leading-loose">
+        <p class="font-serif tracking-[0.4em] text-sm md:text-base uppercase" data-scroll-fade>Viernes 11</p>
+        <p class="font-sans tracking-[0.2em] text-sm font-light" data-scroll-fade>2 : 0 0 P M</p>
+        <p class="font-serif tracking-[0.3em] text-xs md:text-sm uppercase leading-loose" data-scroll-fade>
           Hacienda San Pablo<br/>
           <span class="text-[10px] md:text-xs tracking-[0.4em]">Subachoque . Colombia</span>
         </p>
@@ -71,31 +71,69 @@ import { Image } from 'astro:assets';
     <img 
       src="/fotonovios1.webp" 
       alt="Sebastián y Daniela" 
-      class="w-full h-full object-cover object-center opacity-80"
+      class="w-full h-full object-cover object-center opacity-90"
       loading="eager"
       fetchpriority="high"
     />
     
+    {/* Difuminado superior extracorto con el color exacto de la flor (#670e01) */}
+    <div class="absolute top-0 left-0 w-full h-8 md:h-12 bg-gradient-to-b from-[#670e01] to-transparent z-10 pointer-events-none"></div>
+
+    {/* Difuminado inferior corto (Solo debajo de las letras) */}
+    <div class="absolute bottom-0 left-0 w-full h-32 md:h-40 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10 pointer-events-none"></div>
+    
     {/* Nombres sobre la foto */}
-    <div class="absolute bottom-10 left-0 w-full text-center z-10 px-4">
-       <h2 class="font-script text-6xl md:text-8xl text-white drop-shadow-lg leading-[0.7]">
-          <span class="block -ml-10">Sebastián</span>
-          <span class="block font-serif text-3xl md:text-4xl text-brand-ivory/80 -ml-20 my-2">&</span>
-          <span class="block ml-16">Daniela</span>
-       </h2>
+    <div class="absolute bottom-10 left-0 w-full flex justify-center z-20 px-4 pointer-events-none">
+      <div class="w-[85%] max-w-[350px] md:max-w-[450px] flex justify-center drop-shadow-letter-premium">
+         <img 
+            src="/sebasdani.webp" 
+            alt="Sebastián y Daniela" 
+            class="w-full h-auto object-contain"
+            loading="eager"
+            data-scroll-fade
+         />
+      </div>
     </div>
   </div>
 
-  {/* PARTE 4: Mensaje de Bienvenida */}
-  <div class="w-full bg-[#750b1c] py-20 px-6 flex justify-center">
-    <div class="bg-brand-ivory w-full max-w-lg p-12 text-center shadow-2xl relative">
-      <h3 class="font-serif text-xl md:text-2xl tracking-[0.1em] text-brand-wine-dark uppercase font-bold mb-6">
-        Con todo nuestro cariño
-      </h3>
-      <p class="font-sans text-[10px] md:text-xs leading-[2.5] tracking-[0.2em] uppercase text-brand-wine-dark/80">
-        Bienvenidos al inicio de<br/>nuestra mejor aventura. Tu<br/>presencia hará que este<br/>momento sea verdaderamente<br/>inolvidable.
-      </p>
-    </div>
-  </div>
+
 
 </section>
+
+<script>
+  // Animación puramente ligada al Scroll (Parallax Fade)
+  document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('[data-scroll-fade]');
+    
+    const updateScrollAnimations = () => {
+      const windowHeight = window.innerHeight;
+      
+      animatedElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const elementTop = rect.top;
+        
+        // Empieza a aparecer cuando su parte superior toca el fondo de la pantalla
+        const startPoint = windowHeight; 
+        // Termina de aparecer (100% visible) en cuanto entra un 10% a la pantalla
+        const endPoint = windowHeight * 0.90; 
+        
+        let progress = (startPoint - elementTop) / (startPoint - endPoint);
+        progress = Math.max(0, Math.min(1, progress)); // Limitar entre 0 y 1
+        
+        // Calcular valores
+        const blurAmount = (1 - progress) * 12; // De 12px a 0px
+        const yOffset = (1 - progress) * 30; // De 30px abajo a 0px
+        
+        // Aplicar directamente
+        el.style.opacity = progress.toFixed(2);
+        el.style.transform = `translateY(${yOffset}px)`;
+        el.style.filter = `blur(${blurAmount}px)`;
+      });
+    };
+
+    // Ejecutar al inicio y cada vez que hagan scroll
+    window.addEventListener('scroll', updateScrollAnimations, { passive: true });
+    window.addEventListener('resize', updateScrollAnimations, { passive: true });
+    updateScrollAnimations();
+  });
+</script>

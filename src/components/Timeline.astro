@@ -10,21 +10,51 @@ const events = [
 ];
 ---
 
-<section className="bg-brand-wine py-24 px-4 overflow-hidden relative">
-  {/* Decorative Background Elements */}
-  <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-  
-  <div class="max-w-4xl mx-auto relative z-10">
-    <div class="text-center mb-20">
-      <h2 class="font-script text-6xl md:text-8xl text-white mb-6 drop-shadow-sm">The Evening</h2>
-      <p class="font-sans text-xs md:text-sm tracking-[0.2em] leading-loose text-white/80 uppercase max-w-xl mx-auto">
+<section class="w-full relative py-20 px-4 overflow-hidden bg-brand-wine" style="background-image: url('/fondrojo.webp'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+  {/* Gradiente sutil sobre toda la sección */}
+  <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30 pointer-events-none z-0"></div>
+
+  {/* CONTENEDOR 1: Bienvenida ("Con todo nuestro cariño") */}
+  <div class="w-full max-w-4xl mx-auto flex justify-center pb-12 pt-6 relative z-10 px-4">
+    <div class="w-full max-w-[280px] md:max-w-[320px] px-5 py-8 md:px-8 md:py-10 text-center shadow-2xl relative rounded-sm overflow-hidden bg-[#faf8f5]">
+      {/* Textura de papel premium de fondo */}
+      <div class="absolute inset-0 z-0 bg-[#faf8f5]">
+        <img 
+          src="/hoja.webp" 
+          alt="Textura de Hoja" 
+          class="w-full h-full object-cover opacity-85" 
+          loading="lazy" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-tr from-[#faf8f5]/60 via-[#faf8f5]/20 to-[#faf8f5]/70 pointer-events-none"></div> 
+      </div>
+
+      <div class="relative z-10">
+        <h3 class="font-serif text-base md:text-lg tracking-[0.2em] text-brand-wine-dark uppercase font-bold mb-5 leading-normal">
+          Con todo<br/>nuestro cariño
+        </h3>
+        <p class="font-sans text-[9px] md:text-[10px] leading-[2.6] tracking-[0.25em] uppercase text-brand-wine-dark/90">
+          Bienvenidos al inicio de<br/>nuestra mejor aventura. Tu<br/>presencia hará que este<br/>momento sea verdaderamente<br/>inolvidable
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {/* CONTENEDOR 2: Línea de Tiempo */}
+  <div class="max-w-lg mx-auto relative z-10 pt-12 pb-16 px-4">
+    {/* Decorative Background Elements */}
+    <div class="absolute inset-0 opacity-10 z-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+
+    <div class="text-center mb-16 relative z-10">
+      <h2 class="font-script text-5xl md:text-7xl text-white mb-5 drop-shadow-sm">The Evening</h2>
+      <p class="font-sans text-[10px] md:text-xs tracking-[0.25em] leading-loose text-white/90 uppercase max-w-md mx-auto">
         Los momentos más importantes de nuestro gran día, donde cada instante será más especial a tu lado
       </p>
     </div>
 
-    <div class="relative max-w-lg mx-auto">
-      {/* Vertical Line */}
-      <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-brand-wine via-white/40 to-brand-wine"></div>
+    {/* Timeline events container, padded left to align items and center the line */}
+    <div class="relative max-w-md mx-auto z-10 pl-8 md:pl-12">
+      {/* Vertical Line aligned perfectly with the TimelineItem dots */}
+      <div class="absolute left-8 md:left-12 top-0 bottom-0 w-px bg-gradient-to-b from-white/10 via-white/40 to-white/10"></div>
       
       <div class="py-10">
         {events.map((event, index) => (
