@@ -66,13 +66,14 @@ import { Image } from 'astro:assets';
 
   </div>
 
-  {/* PARTE 3: Foto de los Novios (Placeholder) */}
+  {/* PARTE 3: Foto de los Novios */}
   <div class="w-full h-[60vh] md:h-[80vh] relative bg-black">
-    {/* Ya que usamos hero.webp arriba, aquí dejamos un placeholder hasta que suban la foto de novios */}
     <img 
-      src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2000&auto=format&fit=crop" 
+      src="/fotonovios1.webp" 
       alt="Sebastián y Daniela" 
       class="w-full h-full object-cover object-center opacity-80"
+      loading="eager"
+      fetchpriority="high"
     />
     
     {/* Nombres sobre la foto */}
