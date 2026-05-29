@@ -10,7 +10,12 @@ const events = [
 ];
 ---
 
-<section class="w-full relative py-20 px-4 overflow-hidden bg-brand-wine" style="background-image: url('/fondrojo.webp'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+<section class="w-full relative py-20 px-4 overflow-hidden bg-brand-wine">
+  {/* Fondo rojo oscuro (sin efecto fixed para evitar zoom en iOS) */}
+  <div class="absolute inset-0 z-0">
+    <img src="/fondrojo.webp" alt="Fondo Rojo" class="w-full h-full object-cover" loading="lazy" />
+  </div>
+  
   {/* Gradiente sutil sobre toda la sección */}
   <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30 pointer-events-none z-0"></div>
 
