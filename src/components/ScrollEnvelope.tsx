@@ -95,8 +95,7 @@ export default function ScrollEnvelope() {
       <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
         
         {/* Fondo rojo oscuro */}
-        <div className="absolute inset-0 z-0">
-          <img src="/fondrojo.webp" alt="Fondo Rojo" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 z-0" style={{ backgroundImage: "url('/fondrojo.webp')", backgroundSize: "100% auto", backgroundRepeat: "repeat-y", backgroundPosition: "top center" }}>
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
 
