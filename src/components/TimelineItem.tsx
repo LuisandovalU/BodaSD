@@ -1,48 +1,36 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Wine, Gem, Utensils, Cake, PartyPopper } from 'lucide-react';
 
 export interface TimelineItemProps {
   title: string;
   time: string;
-  iconName: 'wine' | 'gem' | 'utensils' | 'cake' | 'party';
+  iconUrl: string;
   index: number;
 }
 
-const icons = {
-  wine: Wine,
-  gem: Gem,
-  utensils: Utensils,
-  cake: Cake,
-  party: PartyPopper,
-};
-
-export default function TimelineItem({ title, time, iconName, index }: TimelineItemProps) {
-  const Icon = icons[iconName];
-
+export default function TimelineItem({ title, time, iconUrl, index }: TimelineItemProps) {
   return (
-    <motion.div 
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.8, ease: "easeOut", delay: index * 0.1 }}
-      className="flex items-center w-full my-10 relative"
+    <div 
+      data-scroll-timeline
+      className="flex items-center w-full my-12 relative opacity-0 transform translate-y-8 filter blur-md transition-all duration-300 ease-out"
+      style={{ willChange: 'opacity, transform, filter' }}
     >
-      {/* The Dot centered exactly on the left line */}
-      <div className="absolute left-0 transform -translate-x-1/2 flex items-center justify-center">
-        <div className="w-3 h-3 bg-white rounded-full z-10 shadow-md" />
+      {/* The concentric premium gold-rimmed timeline dot */}
+      <div className="absolute left-0 transform -translate-x-1/2 flex items-center justify-center w-8 h-8">
+        <div className="w-5 h-5 rounded-full border border-[#e2c589]/60 bg-[#4a0d18]/80 backdrop-blur-[1px] shadow-[0_0_8px_rgba(226,197,137,0.4)] flex items-center justify-center z-10">
+          <div className="w-1.5 h-1.5 bg-white rounded-full z-20" />
+        </div>
       </div>
 
       {/* Content Container (Icon + Text) */}
       <div className="flex items-center gap-6 md:gap-8 ml-6 md:ml-8">
-        {/* Icon Container with subtle animation */}
-        <motion.div
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: index * 0.5 }}
-          className="text-white shrink-0"
-        >
-          <Icon strokeWidth={1.2} size={48} className="opacity-95" />
-        </motion.div>
+        {/* Icon Container (enlarged for premium visibility) */}
+        <div className="w-18 h-18 md:w-[84px] md:h-[84px] flex items-center justify-center shrink-0">
+          <img 
+            src={iconUrl} 
+            alt={title} 
+            className="w-full h-full object-contain opacity-95 filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.3)] animate-subtle-float"
+          />
+        </div>
 
         {/* Text Container */}
         <div className="flex flex-col justify-center text-left">
@@ -50,6 +38,6 @@ export default function TimelineItem({ title, time, iconName, index }: TimelineI
           <p className="font-sans text-xs tracking-widest text-brand-gold-light/95 mt-1.5 uppercase font-medium">{time}</p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

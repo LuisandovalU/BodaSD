@@ -78,6 +78,16 @@
     animation: float 8s ease-in-out infinite;
   }
 
+  @keyframes subtle-float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .animate-subtle-float {
+    animation: subtle-float 6s ease-in-out infinite;
+  }
+
   .shadow-luxury {
     box-shadow: 
       0 25px 50px -12px rgba(0, 0, 0, 0.5), 

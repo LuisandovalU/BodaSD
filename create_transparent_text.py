@@ -11,6 +11,9 @@ def create_transparent_text(input_path, output_path, text_color=(94, 10, 22)):
         # Esto preserva el suavizado (anti-aliasing) de los bordes perfectamente.
         alpha_mask = ImageOps.invert(img)
         
+        # Eliminar el fondo gris/sucio: cualquier valor de opacidad menor a 120 se vuelve 0 (totalmente transparente)
+        alpha_mask = alpha_mask.point(lambda p: 0 if p < 120 else min(255, int((p - 120) * 2.0)))
+        
         # Crear una imagen vacía del mismo tamaño con el color de texto deseado (R, G, B)
         color_img = Image.new("RGBA", img.size, color=text_color)
         
@@ -37,5 +40,5 @@ if __name__ == "__main__":
     else:
         output_file = "public/save-our-date.webp"
         
-    # El color (94, 10, 22) corresponde al rojo oscuro #5e0a16 de tu diseño
+    # El color (94, 10, 22) corresponde al color rojo oscuro / vino (#5e0a16)
     create_transparent_text(input_file, output_file, text_color=(94, 10, 22))

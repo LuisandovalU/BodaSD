@@ -8,8 +8,8 @@ def create_white_transparent(input_path, output_path):
         alpha_mask = Image.open(input_path).convert("L")
         
         # Umbral más alto para eliminar cualquier ruido de fondo jpeg (evita el "cuadro" o "halo" fantasma)
-        # Todo valor menor a 95 se vuelve 100% transparente.
-        alpha_mask = alpha_mask.point(lambda p: 0 if p < 95 else min(255, int((p - 95) * 2.0)))
+        # Todo valor menor a 140 se vuelve 100% transparente.
+        alpha_mask = alpha_mask.point(lambda p: 0 if p < 140 else min(255, int((p - 140) * 2.2)))
 
         # Crear una imagen vacía del mismo tamaño con color blanco sólido (R, G, B)
         color_img = Image.new("RGBA", alpha_mask.size, color=(255, 255, 255))

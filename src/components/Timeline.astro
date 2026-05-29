@@ -2,11 +2,11 @@
 import TimelineItem from './TimelineItem';
 
 const events = [
-  { title: 'Recepción', time: '2:00 PM', iconName: 'wine' as const },
-  { title: 'Ceremonia', time: '2:00 PM', iconName: 'gem' as const },
-  { title: 'Comida', time: '2:00 PM', iconName: 'utensils' as const },
-  { title: 'Cake Cutting', time: '2:00 PM', iconName: 'cake' as const },
-  { title: 'Party', time: '2:00 PM', iconName: 'party' as const },
+  { title: 'Recepción', time: '2:00 PM', iconUrl: '/1-recepcion.webp' },
+  { title: 'Ceremonia', time: '2:00 PM', iconUrl: '/2-ceremonia.webp' },
+  { title: 'Comida', time: '2:00 PM', iconUrl: '/3-comida.webp' },
+  { title: 'Cake Cutting', time: '2:00 PM', iconUrl: '/4-cake.webp' },
+  { title: 'Party', time: '2:00 PM', iconUrl: '/5-party.webp' },
 ];
 ---
 
@@ -44,8 +44,15 @@ const events = [
     {/* Decorative Background Elements */}
     <div class="absolute inset-0 opacity-10 z-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
 
-    <div class="text-center mb-16 relative z-10">
-      <h2 class="font-script text-5xl md:text-7xl text-white mb-5 drop-shadow-sm">The Evening</h2>
+    <div class="text-center mb-16 relative z-10 flex flex-col items-center">
+      <div class="w-[85%] max-w-[280px] md:max-w-[360px] h-auto flex justify-center mb-5 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+        <img 
+          src="/itinerario.webp" 
+          alt="The Evening" 
+          class="w-full h-auto object-contain"
+          loading="lazy"
+        />
+      </div>
       <p class="font-sans text-[10px] md:text-xs tracking-[0.25em] leading-loose text-white/90 uppercase max-w-md mx-auto">
         Los momentos más importantes de nuestro gran día, donde cada instante será más especial a tu lado
       </p>
@@ -62,7 +69,7 @@ const events = [
             client:visible 
             title={event.title} 
             time={event.time} 
-            iconName={event.iconName} 
+            iconUrl={event.iconUrl} 
             index={index} 
           />
         ))}
@@ -70,3 +77,50 @@ const events = [
     </div>
   </div>
 </section>
+
+<script>
+  // Animación suave ligada al scroll con retención permanente para la línea de tiempo
+  document.addEventListener('DOMContentLoaded', () => {
+    const timelineElements = document.querySelectorAll('[data-scroll-timeline]');
+    
+    const updateTimelineScroll = () => {
+      const windowHeight = window.innerHeight;
+      
+      timelineElements.forEach((element) => {
+        const el = element as HTMLElement;
+        // Si ya fue revelado al 100%, lo mantenemos fijo y evitamos recalcular
+        if (el.dataset.revealed === 'true') return;
+        
+        const rect = el.getBoundingClientRect();
+        const elementTop = rect.top;
+        
+        // Empieza a revelarse cuando entra por abajo
+        const startPoint = windowHeight; 
+        // Se revela por completo cuando entra un 12% a la pantalla
+        const endPoint = windowHeight * 0.88; 
+        
+        let progress = (startPoint - elementTop) / (startPoint - endPoint);
+        progress = Math.max(0, Math.min(1, progress));
+        
+        const blurAmount = (1 - progress) * 8; // De 8px de desenfoque a 0px
+        const xOffset = (1 - progress) * -25; // Se desliza 25px desde la izquierda a 0px
+        
+        el.style.opacity = progress.toFixed(2);
+        el.style.transform = `translateX(${xOffset}px)`;
+        el.style.filter = `blur(${blurAmount}px)`;
+        
+        // Bloquear al 100% de revelado para que se mantenga fijo permanentemente
+        if (progress >= 1.0) {
+          el.dataset.revealed = 'true';
+          el.style.opacity = '1';
+          el.style.transform = 'translateX(0)';
+          el.style.filter = 'blur(0px)';
+        }
+      });
+    };
+
+    window.addEventListener('scroll', updateTimelineScroll, { passive: true });
+    window.addEventListener('resize', updateTimelineScroll, { passive: true });
+    updateTimelineScroll();
+  });
+</script>
