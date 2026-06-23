@@ -1,18 +1,37 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import Welcome from '../components/Welcome.astro';
 import Timeline from '../components/Timeline.astro';
 import DressCode from '../components/DressCode.astro';
+import HowToArrive from '../components/HowToArrive.astro';
 import Information from '../components/Information.astro';
 import RSVP from '../components/RSVP.astro';
 ---
 
 <Layout title="Boda Sebastián y Daniela | 11.12.26">
 	<main>
+		<!-- 1. Portada (con hora 3PM, versículo y botón calendario) -->
 		<Hero />
+
+		<Welcome />
+
+		<!-- 3. Bienvenida + The Details / Cronograma -->
 		<Timeline />
+
+		<!-- 4. Dress Code (paleta de colores) -->
 		<DressCode />
+
+		<!-- 5. Cómo llegar -->
+		<HowToArrive />
+
+		<!-- 6. Nota importante (adultos / invitación personal) -->
 		<Information />
+
+		<!-- 7. Regalos (lluvia de sobres – con animación de sobre) -->
+		<!-- ScrollEnvelope está incluido dentro de Information.astro -->
+
+		<!-- 8. Confirmación de asistencia -->
 		<RSVP />
 	</main>
 </Layout>

@@ -1,134 +1,444 @@
 ---
 // src/components/RSVP.astro
+
+// ⚠️ Reemplaza con el número de WhatsApp real (formato: 521XXXXXXXXXX para México)
+const whatsappNumber = '521XXXXXXXXXX';
 ---
 
-<section class="bg-[#f5f5f0] py-24 px-4 text-center">
-  <div class="max-w-2xl mx-auto space-y-12">
-    
-    <div class="space-y-4">
-      <div class="flex justify-center mb-6">
-        <img src="/confirma.webp" alt="Confirmación de Asistencia" class="w-[90%] max-w-[400px] md:max-w-[500px] h-auto object-contain drop-shadow-sm" />
-      </div>
-      <p class="font-sans text-xs md:text-sm leading-loose tracking-[0.15em] uppercase text-brand-wine/80">
-        Para asegurar tu lugar y celebrar juntos este día tan especial, te pedimos amablemente confirmar tu asistencia realizando el pago de:
-      </p>
-      <p class="font-serif text-2xl tracking-[0.2em] text-brand-wine-dark mt-6 font-semibold">
-        $300 MXN
-      </p>
-      <p class="font-sans text-[10px] md:text-xs tracking-widest uppercase text-brand-wine/60 mt-2">
-        A más tardar el [Día y Mes Límite]
-      </p>
-      <p class="font-sans text-xs leading-loose tracking-[0.1em] uppercase text-brand-wine/80 mt-8 max-w-md mx-auto border-t border-brand-wine/10 pt-6">
-        Comparte tu comprobante de pago con nosotros para que tu lugar quede oficialmente registrado.
-      </p>
+<section class="rsvp-section">
+
+  {/* Fondo sutil de papel */}
+  <div class="rsvp-bg"></div>
+
+  <div class="rsvp-container">
+
+    {/* Imagen de confirmación */}
+    <div class="rsvp-header">
+      <img 
+        src="/confirma.webp" 
+        alt="Confirmación de Asistencia" 
+        class="rsvp-header-img" 
+      />
+      <p class="rsvp-subtitle">¡Nos encantaría celebrar contigo!</p>
     </div>
 
-    {/* RSVP Form to WhatsApp */}
-    <div class="bg-white p-8 md:p-12 shadow-xl border border-gray-100 rounded-sm mt-12 relative overflow-hidden group">
-      <div class="absolute inset-0 bg-brand-wine opacity-0 group-hover:opacity-5 transition-opacity duration-500 pointer-events-none"></div>
-      
-      <form id="rsvp-form" class="space-y-6 max-w-sm mx-auto relative z-10 text-left">
-        <div class="space-y-2">
-          <label for="name" class="block font-serif text-sm tracking-widest text-brand-wine uppercase">Nombre Completo</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            required 
-            placeholder="Ej. Juan Pérez"
-            class="w-full bg-gray-50 border border-gray-200 text-brand-wine text-sm rounded-none focus:ring-brand-gold focus:border-brand-gold block p-3 transition-colors outline-none"
-          >
+    {/* Formulario */}
+    <div class="rsvp-card">
+
+      <form id="rsvp-form" class="rsvp-form" novalidate>
+
+        {/* Campo nombre */}
+        <div class="rsvp-field">
+          <label for="rsvp-name" class="rsvp-label">
+            <span class="rsvp-label-num">01</span>
+            Nombre Completo
+          </label>
+          <input
+            type="text"
+            id="rsvp-name"
+            name="name"
+            required
+            autocomplete="name"
+            placeholder="Tu nombre completo"
+            class="rsvp-input"
+          />
         </div>
-        
-        <button 
-          type="submit" 
-          class="w-full bg-brand-wine hover:bg-brand-wine-dark text-white font-serif tracking-[0.2em] uppercase text-sm py-4 px-6 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-        >
-          Enviar Comprobante
+
+        {/* Campo asistencia */}
+        <div class="rsvp-field">
+          <span class="rsvp-label">
+            <span class="rsvp-label-num">02</span>
+            ¿Nos acompañarás?
+          </span>
+
+          <div class="rsvp-choices">
+            <label class="rsvp-choice" id="choice-yes">
+              <input type="radio" name="attendance" value="yes" required class="rsvp-radio" id="radio-yes" />
+              <span class="rsvp-choice-box">
+                <span class="rsvp-choice-emoji">✨</span>
+                <span class="rsvp-choice-text">¡Sí, ahí estaré!</span>
+              </span>
+            </label>
+
+            <label class="rsvp-choice" id="choice-no">
+              <input type="radio" name="attendance" value="no" class="rsvp-radio" id="radio-no" />
+              <span class="rsvp-choice-box">
+                <span class="rsvp-choice-emoji">🤍</span>
+                <span class="rsvp-choice-text">Con cariño, no podré asistir.</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        {/* Botón enviar */}
+        <button type="submit" class="rsvp-submit" id="btn-rsvp-submit">
+          <svg class="rsvp-submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12zm0 0h7.5" />
+          </svg>
+          Confirmar Asistencia
         </button>
+
       </form>
+
     </div>
 
     {/* Collage Fotográfico Polaroid */}
-    <div class="mt-20 relative w-full max-w-lg mx-auto px-4">
+    <div class="rsvp-collage">
       
-      {/* Foto 1 - Arriba izquierda, horizontal */}
-      <div class="polaroid-item group relative w-[65%] -rotate-2 mb-[-30px] z-10 transition-all duration-500 ease-out hover:scale-110 hover:-rotate-1 hover:z-40 [&.active]:scale-110 [&.active]:-rotate-1 [&.active]:z-40 cursor-pointer">
-        <div class="bg-white p-2 pb-10 shadow-2xl shadow-black/20 rounded-sm">
-          <div class="aspect-square overflow-hidden">
-            <img src="/collage/foto1.webp" alt="Sebastián y Daniela" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.active]:scale-105" loading="lazy" />
+      <div class="rsvp-polaroid rsvp-polaroid-1">
+        <div class="rsvp-polaroid-frame">
+          <div class="rsvp-polaroid-img-wrap">
+            <img src="/collage/foto1.webp" alt="Sebastián y Daniela" class="rsvp-polaroid-img" loading="lazy" />
           </div>
         </div>
       </div>
 
-      {/* Foto 2 - Centro derecha */}
-      <div class="polaroid-item group relative w-[55%] ml-auto rotate-1 mb-[-20px] z-20 transition-all duration-500 ease-out hover:scale-110 hover:rotate-0 hover:z-40 [&.active]:scale-110 [&.active]:rotate-0 [&.active]:z-40 cursor-pointer">
-        <div class="bg-white p-2 pb-10 shadow-2xl shadow-black/20 rounded-sm">
-          <div class="aspect-square overflow-hidden">
-            <img src="/collage/foto2.webp" alt="Sebastián y Daniela" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.active]:scale-105" loading="lazy" />
+      <div class="rsvp-polaroid rsvp-polaroid-2">
+        <div class="rsvp-polaroid-frame">
+          <div class="rsvp-polaroid-img-wrap">
+            <img src="/collage/foto2.webp" alt="Sebastián y Daniela" class="rsvp-polaroid-img" loading="lazy" />
           </div>
         </div>
       </div>
 
-      {/* Foto 3 - Abajo izquierda, vertical */}
-      <div class="polaroid-item group relative w-[60%] -rotate-1 mb-[-25px] z-10 transition-all duration-500 ease-out hover:scale-110 hover:rotate-0 hover:z-40 [&.active]:scale-110 [&.active]:rotate-0 [&.active]:z-40 cursor-pointer">
-        <div class="bg-white p-2 pb-10 shadow-2xl shadow-black/20 rounded-sm">
-          <div class="aspect-square overflow-hidden">
-            <img src="/collage/foto3.webp" alt="Sebastián y Daniela" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.active]:scale-105" loading="lazy" />
+      <div class="rsvp-polaroid rsvp-polaroid-3">
+        <div class="rsvp-polaroid-frame">
+          <div class="rsvp-polaroid-img-wrap">
+            <img src="/collage/foto3.webp" alt="Sebastián y Daniela" class="rsvp-polaroid-img" loading="lazy" />
           </div>
         </div>
       </div>
 
-      {/* Foto 4 - Abajo derecha */}
-      <div class="polaroid-item group relative w-[55%] ml-auto rotate-2 z-20 transition-all duration-500 ease-out hover:scale-110 hover:rotate-3 hover:z-40 [&.active]:scale-110 [&.active]:rotate-3 [&.active]:z-40 cursor-pointer">
-        <div class="bg-white p-2 pb-10 shadow-2xl shadow-black/20 rounded-sm">
-          <div class="aspect-square overflow-hidden">
-            <img src="/collage/foto4.webp" alt="Sebastián y Daniela" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.active]:scale-105" loading="lazy" />
+      <div class="rsvp-polaroid rsvp-polaroid-4">
+        <div class="rsvp-polaroid-frame">
+          <div class="rsvp-polaroid-img-wrap">
+            <img src="/collage/foto4.webp" alt="Sebastián y Daniela" class="rsvp-polaroid-img" loading="lazy" />
           </div>
         </div>
       </div>
 
     </div>
 
-    {/* Firma final superpuesta */}
-    <div class="relative w-full max-w-lg mx-auto px-4 mt-[-60px] md:mt-[-80px] flex flex-col items-start z-30 pointer-events-none">
-      <img src="/con_amor.webp" alt="Con amor" class="w-16 md:w-20 h-auto object-contain drop-shadow-sm ml-4 mb-[-8px]" />
-      <img src="/sebasdani_wine.webp" alt="Sebastián & Daniela" class="w-[90%] max-w-[340px] md:max-w-[420px] h-auto object-contain drop-shadow-xl" />
+    {/* Firma final */}
+    <div class="rsvp-signature">
+      <img src="/con_amor.webp" alt="Con amor" class="rsvp-sig-small" />
+      <img src="/sebasdani_wine.webp" alt="Sebastián & Daniela" class="rsvp-sig-large" />
     </div>
+
   </div>
+
 </section>
 
-<script>
+<style>
+  .rsvp-section {
+    position: relative;
+    width: 100%;
+    background: #f5f5f0;
+    padding: 5rem 1.5rem 6rem;
+    overflow: hidden;
+  }
+
+  .rsvp-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/hoja.webp');
+    background-size: cover;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  .rsvp-container {
+    position: relative;
+    z-index: 10;
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  /* Header */
+  .rsvp-header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .rsvp-header-img {
+    width: 90%;
+    max-width: 420px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(107,20,36,0.2));
+  }
+
+  .rsvp-subtitle {
+    font-family: 'Alex Brush', cursive;
+    font-size: clamp(1.5rem, 5vw, 1.9rem);
+    color: #4a0d18;
+    margin: 0;
+  }
+
+  /* Card */
+  .rsvp-card {
+    width: 100%;
+    background: white;
+    border: 1px solid rgba(107,20,36,0.08);
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 4px 12px rgba(107,20,36,0.06);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .rsvp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #c5a059, #6b1424, #c5a059);
+  }
+
+  .rsvp-form {
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  /* Fields */
+  .rsvp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .rsvp-label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #6b1424;
+  }
+
+  .rsvp-label-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.5rem;
+    color: #c5a059;
+    opacity: 0.8;
+  }
+
+  .rsvp-input {
+    width: 100%;
+    background: #fafaf8;
+    border: 1px solid rgba(107,20,36,0.15);
+    border-radius: 2px;
+    padding: 0.85rem 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: #4a0d18;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    box-sizing: border-box;
+  }
+
+  .rsvp-input::placeholder {
+    color: rgba(107,20,36,0.3);
+    font-size: 0.75rem;
+  }
+
+  .rsvp-input:focus {
+    border-color: #c5a059;
+    box-shadow: 0 0 0 3px rgba(197,160,89,0.1);
+  }
+
+  /* Radio choices */
+  .rsvp-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .rsvp-choice {
+    cursor: pointer;
+    display: block;
+  }
+
+  .rsvp-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+  }
+
+  .rsvp-choice-box {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid rgba(107,20,36,0.12);
+    border-radius: 2px;
+    background: #fafaf8;
+    transition: all 0.25s ease;
+    cursor: pointer;
+  }
+
+  .rsvp-choice:hover .rsvp-choice-box {
+    border-color: rgba(197,160,89,0.5);
+    background: rgba(197,160,89,0.04);
+  }
+
+  .rsvp-radio:checked + .rsvp-choice-box {
+    border-color: #c5a059;
+    background: rgba(197,160,89,0.08);
+    box-shadow: 0 0 0 3px rgba(197,160,89,0.1);
+  }
+
+  .rsvp-choice-emoji {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .rsvp-choice-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    color: #4a0d18;
+    letter-spacing: 0.05em;
+  }
+
+  /* Submit */
+  .rsvp-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    background: #6b1424;
+    color: #faf8f5;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    padding: 1.1rem 2rem;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(107,20,36,0.3);
+  }
+
+  .rsvp-submit:hover {
+    background: #4a0d18;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(107,20,36,0.4);
+  }
+
+  .rsvp-submit:active { transform: translateY(0); }
+
+  .rsvp-submit-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Collage */
+  .rsvp-collage {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin-top: 2rem;
+  }
+
+  .rsvp-polaroid { position: relative; }
+
+  .rsvp-polaroid-frame {
+    background: white;
+    padding: 0.5rem 0.5rem 2.5rem;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    border-radius: 2px;
+  }
+
+  .rsvp-polaroid-img-wrap { aspect-ratio: 1; overflow: hidden; }
+
+  .rsvp-polaroid-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .rsvp-polaroid-1 { width: 65%; transform: rotate(-2deg); margin-bottom: -30px; z-index: 10; position: relative; }
+  .rsvp-polaroid-2 { width: 55%; transform: rotate(1deg); margin-left: auto; margin-bottom: -20px; z-index: 20; position: relative; }
+  .rsvp-polaroid-3 { width: 60%; transform: rotate(-1deg); margin-bottom: -25px; z-index: 10; position: relative; }
+  .rsvp-polaroid-4 { width: 55%; transform: rotate(2deg); margin-left: auto; z-index: 20; position: relative; }
+
+  /* Signature */
+  .rsvp-signature {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin-top: -60px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 30;
+    pointer-events: none;
+    padding-left: 1rem;
+  }
+
+  .rsvp-sig-small {
+    width: 64px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.2));
+    margin-bottom: -8px;
+  }
+
+  .rsvp-sig-large {
+    width: 90%;
+    max-width: 340px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 24px rgba(107,20,36,0.3));
+  }
+</style>
+
+<script define:vars={{ whatsappNumber }}>
   const form = document.getElementById('rsvp-form');
-  // Placeholder phone number - replace with the actual number
-  const phoneNumber = '520000000000'; 
 
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
-    const nameInput = document.getElementById('name') as HTMLInputElement;
-    const name = nameInput.value;
-    
-    if (name) {
-      const message = encodeURIComponent(`¡Hola! Quiero confirmar mi asistencia, soy ${name}. Aquí está mi comprobante:`);
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
-      window.open(whatsappUrl, '_blank');
-    }
-  });
-  // Animación Polaroid al hacer scroll (especial para móvil)
-  const polaroids = document.querySelectorAll('.polaroid-item');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      // Se activa cuando la foto cruza el centro de la pantalla
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-      } else {
-        entry.target.classList.remove('active');
-      }
-    });
-  }, {
-    rootMargin: '-35% 0px -35% 0px', // Zona central del 30% de la pantalla
-    threshold: 0
-  });
 
-  polaroids.forEach(el => observer.observe(el));
+    const nameInput = document.getElementById('rsvp-name');
+    const attendanceInput = document.querySelector('input[name="attendance"]:checked');
+
+    if (!nameInput.value.trim()) {
+      nameInput.focus();
+      nameInput.style.borderColor = '#c5a059';
+      return;
+    }
+
+    if (!attendanceInput) {
+      const choices = document.querySelector('.rsvp-choices');
+      choices?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const name = nameInput.value.trim();
+    const going = attendanceInput.value === 'yes';
+
+    const message = going
+      ? `¡Hola! Soy ${name} y con mucha alegría confirmo que ahí estaré celebrando con ustedes 🥂✨`
+      : `¡Hola! Soy ${name}. Con mucho cariño les hago saber que lamentablemente no podré acompañarlos, pero los deseo lo mejor en su día especial 🤍`;
+
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  });
 </script>

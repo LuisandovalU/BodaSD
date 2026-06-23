@@ -1,0 +1,53 @@
+---
+// src/components/Welcome.astro
+---
+<section class="w-full bg-[#faf8f5] py-20 px-6 flex flex-col items-center justify-center text-center relative">
+  <div class="max-w-2xl mx-auto space-y-12 relative z-10">
+    
+    {/* Contenedor de la Cuenta Regresiva */}
+    <div class="pt-0">
+      <h3 class="font-sans tracking-[0.3em] text-xs uppercase text-[#3a4f3b] mb-6">Faltan</h3>
+      
+      <div id="countdown" class="flex justify-center gap-5 md:gap-10 font-serif text-[#5e0a16]">
+        <div class="flex flex-col items-center"><span id="days" class="text-5xl md:text-7xl">00</span><span class="text-xs md:text-sm uppercase tracking-[0.2em] mt-3">Días</span></div>
+        <span class="text-4xl md:text-6xl font-light mt-1">:</span>
+        <div class="flex flex-col items-center"><span id="hours" class="text-5xl md:text-7xl">00</span><span class="text-xs md:text-sm uppercase tracking-[0.2em] mt-3">Hrs</span></div>
+        <span class="text-4xl md:text-6xl font-light mt-1">:</span>
+        <div class="flex flex-col items-center"><span id="minutes" class="text-5xl md:text-7xl">00</span><span class="text-xs md:text-sm uppercase tracking-[0.2em] mt-3">Min</span></div>
+        <span class="text-4xl md:text-6xl font-light mt-1">:</span>
+        <div class="flex flex-col items-center"><span id="seconds" class="text-5xl md:text-7xl">00</span><span class="text-xs md:text-sm uppercase tracking-[0.2em] mt-3">Seg</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Lógica de la Cuenta Regresiva
+  const countDownDate = new Date("Dec 11, 2026 15:00:00").getTime();
+
+  const updateCountdown = () => {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+
+    if (distance < 0) return;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const daysEl = document.getElementById("days");
+    const hoursEl = document.getElementById("hours");
+    const minutesEl = document.getElementById("minutes");
+    const secondsEl = document.getElementById("seconds");
+
+    if(daysEl) daysEl.innerText = days.toString().padStart(2, '0');
+    if(hoursEl) hoursEl.innerText = hours.toString().padStart(2, '0');
+    if(minutesEl) minutesEl.innerText = minutes.toString().padStart(2, '0');
+    if(secondsEl) secondsEl.innerText = seconds.toString().padStart(2, '0');
+  };
+
+  setInterval(updateCountdown, 1000);
+  updateCountdown();
+</script>

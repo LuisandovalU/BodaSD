@@ -1,0 +1,14 @@
+---
+export interface Props {
+  color?: string; // Background color of the current section to blend with
+}
+
+const { color = '#faf8f5' } = Astro.props;
+---
+
+<div class="absolute top-0 left-0 w-full overflow-hidden leading-none z-20 pointer-events-none" style="transform: translateY(-99%);">
+  <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-[40px] md:h-[60px]">
+    <!-- Onda curva suave hacia abajo en el medio, como en la imagen -->
+    <path d="M0,0 C300,120 900,120 1200,0 L1200,120 L0,120 Z" fill={color}></path>
+  </svg>
+</div>

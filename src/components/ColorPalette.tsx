@@ -1,13 +1,20 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+export interface ColorItem {
+  hex: string;
+  name: string;
+}
 
 interface ColorPaletteProps {
-  colors: string[];
+  colors: ColorItem[];
   title?: string;
   isBanned?: boolean;
 }
 
 export default function ColorPalette({ colors, title, isBanned = false }: ColorPaletteProps) {
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
   return (
     <div className="flex flex-col items-center">
       {title && (
@@ -28,12 +35,15 @@ export default function ColorPalette({ colors, title, isBanned = false }: ColorP
             <motion.div
               key={index}
               whileHover={{ y: -4, scale: 1.1 }}
+              onHoverStart={() => setSelectedIndex(index)}
+              onHoverEnd={() => setSelectedIndex(null)}
+              onTouchStart={() => setSelectedIndex(index)}
               transition={{ type: "spring", stiffness: 400, damping: 15 }}
-              className="relative"
+              className="relative cursor-pointer"
             >
               <div 
-                className={`w-8 h-8 md:w-10 md:h-10 rounded-full shadow-inner border-[0.5px] border-black/20 ${isBanned ? 'opacity-80' : ''}`}
-                style={{ backgroundColor: color }}
+                className={`w-8 h-8 md:w-10 md:h-10 rounded-full shadow-inner border-[0.5px] border-black/20 transition-all duration-300 ${isBanned ? 'opacity-80' : ''} ${selectedIndex === index ? 'ring-2 ring-offset-2 ring-[#c5a059] scale-110' : ''}`}
+                style={{ backgroundColor: color.hex }}
               />
               {isBanned && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -43,6 +53,23 @@ export default function ColorPalette({ colors, title, isBanned = false }: ColorP
             </motion.div>
           ))}
         </div>
+      </div>
+
+      {/* Selected color name display */}
+      <div className="h-6 mt-4 flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          {selectedIndex !== null && (
+            <motion.p 
+              key={selectedIndex}
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 5 }}
+              className={`font-serif text-[10px] md:text-xs tracking-[0.2em] uppercase font-semibold ${isBanned ? 'text-red-400' : 'text-[#e2c589]'}`}
+            >
+              {colors[selectedIndex].name}
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -109,15 +109,23 @@ export default function ScrollEnvelope() {
           />
           
           {/* Overlay text / regalos */}
-          <div className={`absolute top-[60%] -translate-y-1/2 left-0 w-full flex flex-col items-center px-8 z-10 pointer-events-none transition-opacity ${scrollProgress > 0.95 ? 'duration-700 delay-[400ms]' : 'duration-75 delay-0'}`} 
-               style={{ opacity: scrollProgress > 0.95 ? 1 : 0 }}>
+          <div className={`absolute top-[50%] -translate-y-1/2 left-0 w-full flex flex-col items-center px-8 z-10 pointer-events-none transition-all ${scrollProgress > 0.75 ? 'duration-1000 delay-300 opacity-100 translate-y-0' : 'duration-300 delay-0 opacity-0 translate-y-4'}`}>
             
-            <div className="flex justify-center mb-4 w-full">
-              <img src="/regalos_wine.webp" alt="Regalos" className="w-[85%] max-w-[280px] h-auto object-contain" />
+            <div className="flex justify-center mb-1.5 w-full">
+              <img src="/regalos_wine.webp" alt="Regalos" className="w-[60%] max-w-[180px] md:max-w-[220px] h-auto object-contain" />
             </div>
-            <p className="font-sans text-[10px] md:text-[11px] leading-loose tracking-[0.15em] uppercase text-[#750f06] max-w-[260px] mx-auto text-center font-bold">
-              Tu presencia es nuestro mayor regalo. Si deseas aportar a este nuevo comienzo, contaremos con lluvia de sobres.
+            <p className="font-sans text-[7px] md:text-[9px] leading-relaxed tracking-[0.15em] uppercase text-[#750f06] max-w-[220px] mx-auto text-center font-bold">
+              Su presencia es el regalo más valioso.
             </p>
+            <p className="font-sans text-[6.5px] md:text-[8px] leading-relaxed tracking-[0.12em] uppercase text-[#750f06]/90 max-w-[240px] mx-auto text-center mt-1">
+              En caso de desear un detalle con nosotros, agradeceremos lluvia de sobres mediante transferencia bancaria.
+            </p>
+            {/* Datos bancarios - placeholder */}
+            <div className="mt-1.5 px-3 py-1.5 rounded-sm border border-[#750f06]/20 bg-[#750f06]/5 max-w-[200px] mx-auto w-full">
+              <p className="font-sans text-[6px] md:text-[7px] tracking-[0.2em] uppercase text-[#750f06]/60 mb-0.5">Transferencia</p>
+              <p className="font-serif text-[8px] md:text-[9px] tracking-[0.1em] text-[#750f06] font-semibold">[BANCO PLACEHOLDER]</p>
+              <p className="font-sans text-[6px] md:text-[7px] tracking-[0.15em] uppercase text-[#750f06]/70 mt-0.5">[CLABE / CUENTA]</p>
+            </div>
           </div>
           
         </div>

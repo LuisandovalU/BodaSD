@@ -1,0 +1,292 @@
+---
+// src/components/HowToArrive.astro
+
+// Google Maps link to Hacienda San Pablo, Subachoque, Colombia
+const mapsUrl = "https://maps.google.com/?q=Hacienda+San+Pablo+Subachoque+Colombia";
+const mapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.1234567890!2d-74.1830!3d4.9313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f8f9f9f9f9f9f%3A0x1234567890abcdef!2sHacienda%20San%20Pablo%2C%20Subachoque!5e0!3m2!1ses!2sco!4v1234567890";
+---
+
+<section class="how-to-arrive-section">
+  
+  {/* Fondo decorativo */}
+  <div class="arrive-bg">
+    <div class="arrive-bg-overlay"></div>
+  </div>
+
+  <div class="arrive-container">
+
+    {/* Título */}
+    <div class="arrive-title-block">
+      <p class="arrive-eyebrow">El Lugar</p>
+      <h2 class="arrive-title">Cómo Llegar</h2>
+      <div class="arrive-divider">
+        <span class="arrive-divider-line"></span>
+        <span class="arrive-divider-diamond">◆</span>
+        <span class="arrive-divider-line"></span>
+      </div>
+    </div>
+
+    {/* Tarjeta de dirección */}
+    <div class="arrive-card">
+      <div class="arrive-card-inner">
+        <p class="arrive-venue-name">Hacienda San Pablo</p>
+        <p class="arrive-venue-location">Subachoque · Colombia</p>
+        <p class="arrive-venue-date">Viernes, 11 de Diciembre de 2026 · 3:00 PM</p>
+        
+        {/* Mapa iframe */}
+        <div class="arrive-map-wrapper">
+          <div class="arrive-map-overlay-top"></div>
+          <div class="arrive-map-overlay-bottom"></div>
+          {/* Placeholder elegante si el mapa no carga */}
+          <div class="arrive-map-placeholder">
+            <div class="arrive-map-pin">📍</div>
+            <p>Hacienda San Pablo</p>
+            <p>Subachoque, Cundinamarca</p>
+          </div>
+        </div>
+
+        {/* Botón Google Maps */}
+        <a 
+          href={mapsUrl} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="arrive-btn"
+          id="btn-google-maps"
+        >
+          <svg class="arrive-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+          </svg>
+          Ver en Google Maps
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+  .how-to-arrive-section {
+    width: 100%;
+    position: relative;
+    padding: 5rem 1.5rem;
+    overflow: hidden;
+    background: #1a0508;
+  }
+
+  .arrive-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('/fondrojo.webp');
+    background-size: 100% auto;
+    background-repeat: repeat-y;
+    background-position: top center;
+    z-index: 0;
+  }
+
+  .arrive-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.55) 100%);
+  }
+
+  .arrive-container {
+    position: relative;
+    z-index: 10;
+    max-width: 480px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .arrive-title-block {
+    text-align: center;
+  }
+
+  .arrive-eyebrow {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: #c5a059;
+    margin-bottom: 0.5rem;
+  }
+
+  .arrive-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.4rem, 5vw, 2rem);
+    font-weight: 500;
+    color: #faf8f5;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .arrive-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .arrive-divider-line {
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: rgba(197,160,89,0.4);
+  }
+
+  .arrive-divider-diamond {
+    font-size: 0.4rem;
+    color: #c5a059;
+    opacity: 0.7;
+  }
+
+  .arrive-card {
+    width: 100%;
+    background: rgba(250,248,245,0.05);
+    border: 1px solid rgba(197,160,89,0.2);
+    border-radius: 4px;
+    backdrop-filter: blur(12px);
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+  }
+
+  .arrive-card-inner {
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .arrive-venue-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #faf8f5;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .arrive-venue-location {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: #c5a059;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  .arrive-venue-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.5);
+    margin: 0.25rem 0 1rem;
+  }
+
+  .arrive-map-wrapper {
+    width: 100%;
+    height: 200px;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 1.25rem;
+    background: #2a0a10;
+    border: 1px solid rgba(197,160,89,0.15);
+  }
+
+  .arrive-map-overlay-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 30px;
+    background: linear-gradient(to bottom, rgba(74,13,24,0.6), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .arrive-map-overlay-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 30px;
+    background: linear-gradient(to top, rgba(74,13,24,0.6), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Placeholder elegante en lugar del iframe (evita errores CORS / embedding) */
+  .arrive-map-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    background: radial-gradient(ellipse at center, #3d0e16 0%, #1a0508 100%);
+  }
+
+  .arrive-map-pin {
+    font-size: 2rem;
+    animation: pin-bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes pin-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .arrive-map-placeholder p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(250,248,245,0.6);
+    margin: 0;
+  }
+
+  .arrive-map-placeholder p:first-of-type {
+    color: #c5a059;
+    opacity: 0.9;
+  }
+
+  .arrive-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: 1px solid #c5a059;
+    color: #c5a059;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: all 0.35s ease;
+    border-radius: 2px;
+  }
+
+  .arrive-btn:hover {
+    background: #c5a059;
+    color: #4a0d18;
+    box-shadow: 0 8px 24px rgba(197,160,89,0.3);
+    transform: translateY(-2px);
+  }
+
+  .arrive-btn-icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+</style>
