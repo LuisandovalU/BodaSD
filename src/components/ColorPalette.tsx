@@ -18,7 +18,7 @@ export default function ColorPalette({ colors, title, isBanned = false }: ColorP
   return (
     <div className="flex flex-col items-center">
       {title && (
-        <h4 className={`font-serif tracking-[0.2em] uppercase text-sm mb-6 ${isBanned ? 'text-red-500' : 'text-white/95'}`}>
+        <h4 className={`font-serif tracking-[0.2em] uppercase font-bold text-sm mb-6 ${isBanned ? 'text-red-500' : 'text-white/95'}`}>
           {title}
         </h4>
       )}

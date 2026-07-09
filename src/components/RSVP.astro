@@ -82,41 +82,33 @@ const whatsappNumber = '521XXXXXXXXXX';
 
     </div>
 
-    {/* Collage Fotográfico Polaroid */}
-    <div class="rsvp-collage">
-      
-      <div class="rsvp-polaroid rsvp-polaroid-1">
-        <div class="rsvp-polaroid-frame">
-          <div class="rsvp-polaroid-img-wrap">
-            <img src="/collage/foto1.webp" alt="Sebastián y Daniela" class="rsvp-polaroid-img" loading="lazy" />
+    {/* Galería Moderna Editorial (Slider Automático Infinito) */}
+    <div class="w-screen relative left-1/2 -translate-x-1/2 mt-16 mb-20 overflow-hidden flex group" style="width: 100vw;">
+      <div class="marquee-track flex gap-4 pr-4">
+        {[1, 2, 3, 4].map((num) => (
+          <div class="shrink-0 w-[65vw] sm:w-[320px] md:w-[400px] aspect-[4/5] relative">
+            <img 
+              src={`/collage/foto${num}.webp`} 
+              alt="Sebastián y Daniela" 
+              class="w-full h-full object-cover object-center rounded-sm" 
+              loading="lazy" 
+            />
           </div>
-        </div>
+        ))}
       </div>
-
-      <div class="rsvp-polaroid rsvp-polaroid-2">
-        <div class="rsvp-polaroid-frame">
-          <div class="rsvp-polaroid-img-wrap">
-            <img src="/collage/foto2.webp" alt="Sebastián y Daniela" class="rsvp-polaroid-img" loading="lazy" />
+      {/* Pista duplicada para el scroll infinito perfecto */}
+      <div class="marquee-track flex gap-4 pr-4" aria-hidden="true">
+        {[1, 2, 3, 4].map((num) => (
+          <div class="shrink-0 w-[65vw] sm:w-[320px] md:w-[400px] aspect-[4/5] relative">
+            <img 
+              src={`/collage/foto${num}.webp`} 
+              alt="Sebastián y Daniela" 
+              class="w-full h-full object-cover object-center rounded-sm" 
+              loading="lazy" 
+            />
           </div>
-        </div>
+        ))}
       </div>
-
-      <div class="rsvp-polaroid rsvp-polaroid-3">
-        <div class="rsvp-polaroid-frame">
-          <div class="rsvp-polaroid-img-wrap">
-            <img src="/collage/foto3.webp" alt="Sebastián y Daniela" class="rsvp-polaroid-img" loading="lazy" />
-          </div>
-        </div>
-      </div>
-
-      <div class="rsvp-polaroid rsvp-polaroid-4">
-        <div class="rsvp-polaroid-frame">
-          <div class="rsvp-polaroid-img-wrap">
-            <img src="/collage/foto4.webp" alt="Sebastián y Daniela" class="rsvp-polaroid-img" loading="lazy" />
-          </div>
-        </div>
-      </div>
-
     </div>
 
     {/* Firma final */}
@@ -349,48 +341,32 @@ const whatsappNumber = '521XXXXXXXXXX';
     flex-shrink: 0;
   }
 
-  /* Collage */
-  .rsvp-collage {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-    margin-top: 2rem;
+  /* Marquee Slider Infinito Perfecto */
+  .marquee-track {
+    display: flex;
+    flex-shrink: 0;
+    animation: scrollMarquee 25s linear infinite;
   }
-
-  .rsvp-polaroid { position: relative; }
-
-  .rsvp-polaroid-frame {
-    background: white;
-    padding: 0.5rem 0.5rem 2.5rem;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-    border-radius: 2px;
+  
+  /* Pausa al poner el cursor encima (desktop) o tocar (móvil) */
+  .group:hover .marquee-track {
+    animation-play-state: paused;
   }
-
-  .rsvp-polaroid-img-wrap { aspect-ratio: 1; overflow: hidden; }
-
-  .rsvp-polaroid-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  
+  @keyframes scrollMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
   }
-
-  .rsvp-polaroid-1 { width: 65%; transform: rotate(-2deg); margin-bottom: -30px; z-index: 10; position: relative; }
-  .rsvp-polaroid-2 { width: 55%; transform: rotate(1deg); margin-left: auto; margin-bottom: -20px; z-index: 20; position: relative; }
-  .rsvp-polaroid-3 { width: 60%; transform: rotate(-1deg); margin-bottom: -25px; z-index: 10; position: relative; }
-  .rsvp-polaroid-4 { width: 55%; transform: rotate(2deg); margin-left: auto; z-index: 20; position: relative; }
 
   /* Signature */
   .rsvp-signature {
     position: relative;
     width: 100%;
-    max-width: 420px;
-    margin-top: -60px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     z-index: 30;
     pointer-events: none;
-    padding-left: 1rem;
   }
 
   .rsvp-sig-small {
@@ -406,7 +382,17 @@ const whatsappNumber = '521XXXXXXXXXX';
     max-width: 340px;
     height: auto;
     object-fit: contain;
-    filter: drop-shadow(0 8px 24px rgba(107,20,36,0.3));
+    filter: drop-shadow(0 4px 12px rgba(107,20,36,0.15));
+    animation: respiration 5s ease-in-out infinite;
+  }
+
+  @keyframes respiration {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.04);
+    }
   }
 </style>
 

@@ -27,9 +27,9 @@ const { title } = Astro.props;
 		<slot />
 
 		<!-- ━━━ MÚSICA DE FONDO ━━━ -->
-		<!-- Coloca tu canción en public/musica.mp3 para activarla -->
+		<!-- Canción: Little Blue - Mahogany Sessions - Jacob Collier -->
 		<audio id="bg-music" loop preload="none">
-			<source src="/musica.mp3" type="audio/mpeg" />
+			<source src="/audio/little-blue.mp3" type="audio/mpeg" />
 		</audio>
 
 		<!-- Botón flotante de música -->
@@ -165,7 +165,7 @@ const { title } = Astro.props;
 
 	// Intentar reproducir con el primer toque/clic en la página
 	const startOnFirstInteraction = () => {
-		if (!isPlaying && audio.src && !audio.src.endsWith('/musica.mp3') === false) {
+		if (!isPlaying && audio.src) {
 			// Solo si el archivo existe (no error 404)
 			audio.addEventListener('canplay', () => {
 				setPlaying(true);

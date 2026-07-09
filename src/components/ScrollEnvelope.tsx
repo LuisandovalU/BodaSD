@@ -94,9 +94,9 @@ export default function ScrollEnvelope() {
     <div ref={containerRef} className="relative w-full" style={{ height: '300vh' }}>
       <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
         
-        {/* Fondo rojo oscuro */}
-        <div className="absolute inset-0 z-0" style={{ backgroundImage: "url('/fondrojo.webp')", backgroundSize: "100% auto", backgroundRepeat: "repeat-y", backgroundPosition: "top center" }}>
-          <div className="absolute inset-0 bg-black/10"></div>
+        {/* Fondo rojo plano y elegante */}
+        <div className="absolute inset-0 z-0 bg-[#750b1c]">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20"></div>
         </div>
 
         {/* Canvas del video centrado */}
