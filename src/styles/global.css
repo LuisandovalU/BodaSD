@@ -102,4 +102,21 @@
       drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45)) 
       drop-shadow(0 20px 45px rgba(0, 0, 0, 0.35));
   }
+
+  /* Marquee Slider Infinito Perfecto */
+  .marquee-track {
+    display: flex;
+    flex-shrink: 0;
+    animation: scrollMarquee 25s linear infinite;
+  }
+  
+  /* Pausa al poner el cursor encima (desktop) o tocar (móvil) */
+  .group:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  
+  @keyframes scrollMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
 }

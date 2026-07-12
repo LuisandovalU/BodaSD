@@ -351,23 +351,6 @@ const whatsappNumber = '521XXXXXXXXXX';
     flex-shrink: 0;
   }
 
-  /* Marquee Slider Infinito Perfecto */
-  .marquee-track {
-    display: flex;
-    flex-shrink: 0;
-    animation: scrollMarquee 25s linear infinite;
-  }
-  
-  /* Pausa al poner el cursor encima (desktop) o tocar (móvil) */
-  .group:hover .marquee-track {
-    animation-play-state: paused;
-  }
-  
-  @keyframes scrollMarquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-  }
-
   /* Signature */
   .rsvp-signature {
     position: relative;
