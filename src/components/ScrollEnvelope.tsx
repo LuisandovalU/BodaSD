@@ -95,7 +95,7 @@ export default function ScrollEnvelope() {
       <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
         
         {/* Fondo rojo plano y elegante */}
-        <div className="absolute inset-0 z-0 bg-[#750b1c]">
+        <div className="absolute inset-0 z-0 bg-[#671104]">
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20"></div>
         </div>
 

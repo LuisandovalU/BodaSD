@@ -1,0 +1,172 @@
+---
+// src/components/Gifts.astro
+---
+
+<section class="w-full relative bg-brand-wine overflow-hidden py-24 md:py-32 px-4">
+
+  {/* Sobres colgantes animacion CSS */}
+  <div class="absolute top-0 left-0 w-full flex justify-center gap-6 sm:gap-10 md:gap-16 px-2 md:px-4 z-10">
+    
+    {/* Hilo y Sobre 1 */}
+    <div class="hanging-envelope" style="animation-delay: 0s;">
+      <div class="h-16 md:h-24 w-[1px] bg-gradient-to-b from-[#c5a059]/10 to-[#c5a059] mx-auto"></div>
+      <div class="envelope-wrapper">
+        <svg class="envelope-svg w-10 md:w-14 h-auto" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="28" rx="2" fill="#faf8f5" stroke="#c5a059" stroke-width="1"/>
+          <path d="M0 2 L20 16 L40 2" stroke="#c5a059" stroke-width="1" fill="#f0eae1"/>
+          <circle cx="20" cy="16" r="3.5" fill="#6b1424" stroke="#c5a059" stroke-width="0.5"/>
+        </svg>
+      </div>
+    </div>
+    
+    {/* Hilo y Sobre 2 */}
+    <div class="hanging-envelope" style="animation-delay: 1.2s;">
+      <div class="h-28 md:h-40 w-[1px] bg-gradient-to-b from-[#c5a059]/10 to-[#c5a059] mx-auto"></div>
+      <div class="envelope-wrapper">
+        <svg class="envelope-svg w-10 md:w-14 h-auto" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="28" rx="2" fill="#faf8f5" stroke="#c5a059" stroke-width="1"/>
+          <path d="M0 2 L20 16 L40 2" stroke="#c5a059" stroke-width="1" fill="#f0eae1"/>
+          <circle cx="20" cy="16" r="3.5" fill="#6b1424" stroke="#c5a059" stroke-width="0.5"/>
+        </svg>
+      </div>
+    </div>
+
+    {/* Hilo y Sobre 3 */}
+    <div class="hanging-envelope" style="animation-delay: 0.5s;">
+      <div class="h-20 md:h-32 w-[1px] bg-gradient-to-b from-[#c5a059]/10 to-[#c5a059] mx-auto"></div>
+      <div class="envelope-wrapper">
+        <svg class="envelope-svg w-10 md:w-14 h-auto" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="28" rx="2" fill="#faf8f5" stroke="#c5a059" stroke-width="1"/>
+          <path d="M0 2 L20 16 L40 2" stroke="#c5a059" stroke-width="1" fill="#f0eae1"/>
+          <circle cx="20" cy="16" r="3.5" fill="#6b1424" stroke="#c5a059" stroke-width="0.5"/>
+        </svg>
+      </div>
+    </div>
+
+    {/* Hilo y Sobre 4 */}
+    <div class="hanging-envelope" style="animation-delay: 1.8s;">
+      <div class="h-36 md:h-48 w-[1px] bg-gradient-to-b from-[#c5a059]/10 to-[#c5a059] mx-auto"></div>
+      <div class="envelope-wrapper">
+        <svg class="envelope-svg w-10 md:w-14 h-auto" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="28" rx="2" fill="#faf8f5" stroke="#c5a059" stroke-width="1"/>
+          <path d="M0 2 L20 16 L40 2" stroke="#c5a059" stroke-width="1" fill="#f0eae1"/>
+          <circle cx="20" cy="16" r="3.5" fill="#6b1424" stroke="#c5a059" stroke-width="0.5"/>
+        </svg>
+      </div>
+    </div>
+
+    {/* Hilo y Sobre 5 */}
+    <div class="hanging-envelope" style="animation-delay: 0.9s;">
+      <div class="h-16 md:h-28 w-[1px] bg-gradient-to-b from-[#c5a059]/10 to-[#c5a059] mx-auto"></div>
+      <div class="envelope-wrapper">
+        <svg class="envelope-svg w-10 md:w-14 h-auto" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="40" height="28" rx="2" fill="#faf8f5" stroke="#c5a059" stroke-width="1"/>
+          <path d="M0 2 L20 16 L40 2" stroke="#c5a059" stroke-width="1" fill="#f0eae1"/>
+          <circle cx="20" cy="16" r="3.5" fill="#6b1424" stroke="#c5a059" stroke-width="0.5"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative z-20 max-w-4xl mx-auto flex flex-col items-center mt-28 md:mt-36">
+    
+    <div class="flex justify-center mb-8 w-full" data-scroll-fade>
+      {/* Se usa invert y opacity para que un gráfico oscuro (wine) se vea bien sobre fondo oscuro */}
+      <img src="/regalos_wine.webp" alt="Regalos" class="w-[70%] max-w-[220px] md:max-w-[280px] h-auto object-contain brightness-0 invert opacity-90 drop-shadow-sm" />
+    </div>
+
+    <p class="font-sans text-[10px] md:text-[11px] leading-loose tracking-[0.2em] uppercase text-white max-w-[320px] mx-auto text-center font-light" data-scroll-fade>
+      Su presencia es el<br/>regalo más valioso.
+    </p>
+
+    <div class="w-12 h-px bg-gradient-to-r from-transparent via-[#c5a059] to-transparent my-6" data-scroll-fade></div>
+
+    <p class="font-sans text-[9px] md:text-[10px] leading-loose tracking-[0.15em] uppercase text-white/80 max-w-sm mx-auto text-center" data-scroll-fade>
+      En caso de desear tener un detalle con nosotros, agradeceremos lluvia de sobres mediante transferencia bancaria.
+    </p>
+
+    {/* Contenedores de cuentas bancarias */}
+    <div class="flex flex-col md:flex-row gap-6 md:gap-10 mt-14 w-full justify-center px-2">
+      
+      {/* México */}
+      <div class="flex-1 w-full max-w-[280px] border border-[#c5a059]/30 rounded-sm p-8 bg-black/10 backdrop-blur-sm shadow-2xl mx-auto md:mx-0 group hover:border-[#c5a059]/60 transition-colors duration-500" data-scroll-fade>
+        <h4 class="font-serif text-[#c5a059] tracking-[0.3em] uppercase text-xs md:text-sm font-semibold mb-6 text-center">México</h4>
+        <div class="space-y-5">
+          <div class="text-center">
+            <p class="text-[7.5px] uppercase tracking-[0.2em] text-white/50 mb-1">Banco</p>
+            <p class="text-[11px] md:text-xs uppercase tracking-widest text-white/90">[BANCO MÉXICO]</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[7.5px] uppercase tracking-[0.2em] text-white/50 mb-1">CLABE / Cuenta</p>
+            <p class="font-serif text-sm md:text-base tracking-widest text-[#c5a059]">[0000 0000 0000]</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Colombia */}
+      <div class="flex-1 w-full max-w-[280px] border border-[#c5a059]/30 rounded-sm p-8 bg-black/10 backdrop-blur-sm shadow-2xl mx-auto md:mx-0 group hover:border-[#c5a059]/60 transition-colors duration-500" data-scroll-fade>
+        <h4 class="font-serif text-[#c5a059] tracking-[0.3em] uppercase text-xs md:text-sm font-semibold mb-6 text-center">Colombia</h4>
+        <div class="space-y-5">
+          <div class="text-center">
+            <p class="text-[7.5px] uppercase tracking-[0.2em] text-white/50 mb-1">Banco</p>
+            <p class="text-[11px] md:text-xs uppercase tracking-widest text-white/90">[BANCO COLOMBIA]</p>
+          </div>
+          <div class="text-center">
+            <p class="text-[7.5px] uppercase tracking-[0.2em] text-white/50 mb-1">No. de Cuenta</p>
+            <p class="font-serif text-sm md:text-base tracking-widest text-[#c5a059]">[0000 0000 0000]</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .hanging-envelope {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform-origin: top center;
+    animation: swing 4s ease-in-out infinite alternate;
+  }
+
+  .envelope-wrapper {
+    margin-top: -1px;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.4));
+  }
+
+  /* Animación pendular suave */
+  @keyframes swing {
+    0% { transform: rotate(-8deg); }
+    100% { transform: rotate(8deg); }
+  }
+</style>
+
+<script>
+  // Simple intersection observer para animar fade in de los elementos
+  document.addEventListener('DOMContentLoaded', () => {
+    const fadeElements = document.querySelectorAll('[data-scroll-fade]');
+    
+    // Inicializar estilos
+    fadeElements.forEach(el => {
+      (el as HTMLElement).style.opacity = '0';
+      (el as HTMLElement).style.transform = 'translateY(20px)';
+      (el as HTMLElement).style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => observer.observe(el));
+  });
+</script>

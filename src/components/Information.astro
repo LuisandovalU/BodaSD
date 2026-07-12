@@ -1,15 +1,11 @@
 ---
-import ScrollEnvelope from './ScrollEnvelope';
+import Gifts from './Gifts.astro';
 ---
 
 <div class="flex flex-col w-full">
   
   {/* Sección Importante */}
-  <section class="text-white py-36 md:py-48 px-4 text-center relative overflow-hidden">
-    {/* Fondo rojo plano y elegante */}
-    <div class="absolute inset-0 z-0 bg-brand-wine">
-      <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/20 pointer-events-none"></div>
-    </div>
+  <section class="text-white py-32 md:py-40 px-4 text-center relative overflow-hidden bg-brand-wine">
     
     <div class="max-w-3xl mx-auto relative z-10">
       <div class="space-y-6">
@@ -24,6 +20,6 @@ import ScrollEnvelope from './ScrollEnvelope';
   </section>
 
   {/* Sección Regalos (Animación al scrollear) */}
-  <ScrollEnvelope client:load />
+  <Gifts />
 
 </div>

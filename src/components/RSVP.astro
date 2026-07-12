@@ -55,7 +55,6 @@ const whatsappNumber = '521XXXXXXXXXX';
             <label class="rsvp-choice" id="choice-yes">
               <input type="radio" name="attendance" value="yes" required class="rsvp-radio" id="radio-yes" />
               <span class="rsvp-choice-box">
-                <span class="rsvp-choice-emoji">✨</span>
                 <span class="rsvp-choice-text">¡Sí, ahí estaré!</span>
               </span>
             </label>
@@ -63,11 +62,25 @@ const whatsappNumber = '521XXXXXXXXXX';
             <label class="rsvp-choice" id="choice-no">
               <input type="radio" name="attendance" value="no" class="rsvp-radio" id="radio-no" />
               <span class="rsvp-choice-box">
-                <span class="rsvp-choice-emoji">🤍</span>
                 <span class="rsvp-choice-text">Con cariño, no podré asistir.</span>
               </span>
             </label>
           </div>
+        </div>
+
+        {/* Campo canción */}
+        <div class="rsvp-field">
+          <label for="rsvp-song" class="rsvp-label">
+            <span class="rsvp-label-num">03</span>
+            ¿Qué canción no puede faltar?
+          </label>
+          <input
+            type="text"
+            id="rsvp-song"
+            name="song"
+            placeholder="Ej. La Gota Fría o Payaso de Rodeo..."
+            class="rsvp-input"
+          />
         </div>
 
         {/* Botón enviar */}
@@ -82,38 +95,9 @@ const whatsappNumber = '521XXXXXXXXXX';
 
     </div>
 
-    {/* Galería Moderna Editorial (Slider Automático Infinito) */}
-    <div class="w-screen relative left-1/2 -translate-x-1/2 mt-16 mb-20 overflow-hidden flex group" style="width: 100vw;">
-      <div class="marquee-track flex gap-4 pr-4">
-        {[1, 2, 3, 4].map((num) => (
-          <div class="shrink-0 w-[65vw] sm:w-[320px] md:w-[400px] aspect-[4/5] relative">
-            <img 
-              src={`/collage/foto${num}.webp`} 
-              alt="Sebastián y Daniela" 
-              class="w-full h-full object-cover object-center rounded-sm" 
-              loading="lazy" 
-            />
-          </div>
-        ))}
-      </div>
-      {/* Pista duplicada para el scroll infinito perfecto */}
-      <div class="marquee-track flex gap-4 pr-4" aria-hidden="true">
-        {[1, 2, 3, 4].map((num) => (
-          <div class="shrink-0 w-[65vw] sm:w-[320px] md:w-[400px] aspect-[4/5] relative">
-            <img 
-              src={`/collage/foto${num}.webp`} 
-              alt="Sebastián y Daniela" 
-              class="w-full h-full object-cover object-center rounded-sm" 
-              loading="lazy" 
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-
     {/* Firma final */}
     <div class="rsvp-signature">
-      <img src="/con_amor.webp" alt="Con amor" class="rsvp-sig-small" />
+      <p class="font-sans italic font-light text-[#6b1424] text-[13px] tracking-[0.25em] mb-1 opacity-90">con amor:</p>
       <img src="/sebasdani_wine.webp" alt="Sebastián & Daniela" class="rsvp-sig-large" />
     </div>
 
@@ -168,8 +152,10 @@ const whatsappNumber = '521XXXXXXXXXX';
   }
 
   .rsvp-subtitle {
-    font-family: 'Alex Brush', cursive;
-    font-size: clamp(1.5rem, 5vw, 1.9rem);
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
     color: #4a0d18;
     margin: 0;
   }
@@ -294,11 +280,6 @@ const whatsappNumber = '521XXXXXXXXXX';
     box-shadow: 0 0 0 3px rgba(197,160,89,0.1);
   }
 
-  .rsvp-choice-emoji {
-    font-size: 1.1rem;
-    flex-shrink: 0;
-  }
-
   .rsvp-choice-text {
     font-family: 'Inter', sans-serif;
     font-size: 0.75rem;
@@ -339,23 +320,6 @@ const whatsappNumber = '521XXXXXXXXXX';
     width: 14px;
     height: 14px;
     flex-shrink: 0;
-  }
-
-  /* Marquee Slider Infinito Perfecto */
-  .marquee-track {
-    display: flex;
-    flex-shrink: 0;
-    animation: scrollMarquee 25s linear infinite;
-  }
-  
-  /* Pausa al poner el cursor encima (desktop) o tocar (móvil) */
-  .group:hover .marquee-track {
-    animation-play-state: paused;
-  }
-  
-  @keyframes scrollMarquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
   }
 
   /* Signature */
@@ -419,10 +383,16 @@ const whatsappNumber = '521XXXXXXXXXX';
 
     const name = nameInput.value.trim();
     const going = attendanceInput.value === 'yes';
+    const songInput = document.getElementById('rsvp-song');
+    const song = songInput ? songInput.value.trim() : '';
 
-    const message = going
-      ? `¡Hola! Soy ${name} y con mucha alegría confirmo que ahí estaré celebrando con ustedes 🥂✨`
-      : `¡Hola! Soy ${name}. Con mucho cariño les hago saber que lamentablemente no podré acompañarlos, pero los deseo lo mejor en su día especial 🤍`;
+    let message = going
+      ? `¡Hola! Soy ${name} y confirmo con mucha alegría que ahí estaré celebrando con ustedes.`
+      : `¡Hola! Soy ${name}. Con mucho cariño les hago saber que lamentablemente no podré acompañarlos, pero les deseo lo mejor en su día especial.`;
+
+    if (going && song) {
+      message += ` Ah, y la canción que no puede faltar en la pista es: "${song}".`;
+    }
 
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');

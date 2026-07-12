@@ -1,0 +1,83 @@
+---
+---
+
+<div id="intro-overlay" class="fixed inset-0 z-50 flex flex-col bg-[#671104] transition-opacity duration-1000 ease-in-out cursor-pointer overflow-hidden">
+  
+  {/* Esta sección imita exactamente la Parte 1 del Hero */}
+  <div class="w-full h-[60vh] md:h-[70vh] relative overflow-hidden bg-[#3a4f3b] flex-shrink-0 z-20 transition-transform duration-1000 ease-[cubic-bezier(0.4,0,0.2,1)] origin-bottom" id="intro-envelope-container">
+    <img 
+      src="/intro.jpeg" 
+      alt="Sobre Cerrado" 
+      class="w-full h-full object-cover object-center" 
+      id="intro-envelope"
+      onerror="this.src='/hero.webp'" 
+      loading="eager"
+    />
+  </div>
+
+  {/* Esta sección imita el fondo rojo debajo del Hero para que la transición sea sin cortes */}
+  <div class="flex-1 w-full bg-[#671104] relative z-30">
+    <!-- Texto indicador flotante -->
+    <div class="absolute top-10 left-0 w-full flex flex-col items-center justify-center text-[#faf8f5] opacity-90 animate-pulse transition-opacity duration-500" id="intro-text">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mb-3">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+      <p class="font-serif tracking-[0.3em] text-sm md:text-base uppercase drop-shadow-md text-center">Toca para<br/>abrir</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('intro-overlay');
+    const envelopeContainer = document.getElementById('intro-envelope-container');
+    const text = document.getElementById('intro-text');
+    
+    // Elementos del Hero
+    const heroCardWrapper = document.getElementById('hero-card-wrapper');
+
+    let isOpening = false;
+
+    if (overlay && envelopeContainer && text) {
+      document.body.style.overflow = 'hidden';
+
+      overlay.addEventListener('click', () => {
+        if (isOpening) return;
+        isOpening = true;
+
+        // Ocultar el texto inmediatamente
+        text.style.opacity = '0';
+        
+        // Fase de Acción: El sobre simplemente se desvanece suavemente
+        // Quitamos la escala y el movimiento para que el fondo verde de tu foto no se mueva
+        envelopeContainer.style.transition = 'opacity 0.8s ease-in-out';
+        envelopeContainer.style.opacity = '0';
+        
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+
+        // Mostrar y animar la tarjeta del Hero disparada hacia arriba
+        if (heroCardWrapper) {
+          heroCardWrapper.classList.remove('hidden');
+          
+          // Forzar reflow para que las transiciones CSS se apliquen
+          void heroCardWrapper.offsetWidth;
+          
+          // Quitar las clases iniciales (oculto, abajo, encogido) y poner estado final
+          heroCardWrapper.classList.remove('opacity-0', 'translate-y-32', 'scale-90');
+          heroCardWrapper.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+        }
+
+        // Restaurar el scroll
+        setTimeout(() => {
+          document.body.style.overflow = '';
+        }, 400);
+
+        // Eliminar el overlay
+        setTimeout(() => {
+          overlay.remove();
+        }, 800);
+      });
+    }
+  });
+</script>

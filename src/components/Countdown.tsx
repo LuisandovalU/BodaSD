@@ -53,7 +53,7 @@ export default function Countdown() {
     <section
       style={{
         width: '100%',
-        background: 'linear-gradient(180deg, #750b1c 0%, #4a0d18 100%)',
+        background: 'linear-gradient(180deg, #671104 0%, #4a0d18 100%)',
         padding: '4rem 1rem',
         display: 'flex',
         flexDirection: 'column',
@@ -66,7 +66,7 @@ export default function Countdown() {
       {/* Decorative top fader */}
       <div style={{
         position: 'absolute', top: 0, left: 0, right: 0, height: '40px',
-        background: 'linear-gradient(to bottom, #670e01, transparent)',
+        background: 'linear-gradient(to bottom, #671104, transparent)',
         pointerEvents: 'none',
       }} />
 

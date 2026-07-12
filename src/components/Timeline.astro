@@ -20,29 +20,44 @@ const events = [
   <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/30 pointer-events-none z-0"></div>
 
   {/* CONTENEDOR 1: Bienvenida ("Con todo nuestro cariño") */}
-  <div class="w-full max-w-4xl mx-auto flex justify-center pb-12 pt-6 relative z-10 px-4">
-    <div class="w-full max-w-[280px] md:max-w-[320px] px-5 py-8 md:px-8 md:py-10 text-center border-[0.5px] border-[#c5a059]/50 relative rounded-sm overflow-hidden bg-[#faf8f5]">
-      {/* Textura de papel premium de fondo */}
+  <div class="w-full max-w-4xl mx-auto flex justify-center pb-16 pt-10 relative z-10 px-4">
+    {/* Contenedor de entrada (revelado al hacer scroll) */}
+    <div id="welcome-card-reveal" class="w-[90%] max-w-[340px] md:max-w-[400px] opacity-0 translate-y-12 transition-all duration-1000 ease-out">
+      
+      {/* Contenedor de la tarjeta (con sombra fuerte y efecto flotante continuo) */}
+      <div class="w-full h-full p-8 md:p-12 text-center relative bg-[#faf8f5] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.6)] animate-float">
+        
+        {/* Textura de papel premium de fondo */}
       <div class="absolute inset-0 z-0 bg-[#faf8f5]">
-        <img 
-          src="/hoja.webp" 
-          alt="Textura de Hoja" 
-          class="w-full h-full object-cover opacity-85" 
-          loading="lazy" 
-        />
+        <img src="/hoja.webp" alt="Textura de Hoja" class="w-full h-full object-cover opacity-85" loading="lazy" />
         <div class="absolute inset-0 bg-gradient-to-tr from-[#faf8f5]/60 via-[#faf8f5]/20 to-[#faf8f5]/70 pointer-events-none"></div> 
       </div>
 
-      <div class="relative z-10">
-        <h3 class="font-serif text-base md:text-lg tracking-[0.2em] text-brand-wine-dark uppercase font-bold mb-5 leading-normal">
+      {/* Doble borde dorado estilo invitación clásica */}
+      <div class="absolute inset-3 border-[0.5px] border-[#c5a059]/40 z-10 pointer-events-none"></div>
+      <div class="absolute inset-[15px] border-[0.5px] border-[#c5a059]/20 z-10 pointer-events-none"></div>
+
+      <div class="relative z-20 flex flex-col items-center">
+        {/* Adorno superior (Estrella/Diamante) */}
+        <svg class="w-5 h-5 text-[#c5a059] mb-5 opacity-80" viewBox="0 0 24 24" fill="currentColor">
+           <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+        </svg>
+
+        <h3 class="font-serif text-lg md:text-xl tracking-[0.3em] text-[#5e0a16] uppercase font-bold mb-5 leading-relaxed">
           Bienvenido/a
         </h3>
-        <p class="font-sans text-[9px] md:text-[10px] leading-[2.6] tracking-[0.25em] uppercase text-brand-wine-dark/90">
-          Al comienzo de nuestro<br/>para siempre. Y la mejor<br/>parte de esta historia<br/>es celebrarla contigo.
+        
+        {/* Línea divisoria */}
+        <div class="w-16 h-[1px] bg-gradient-to-r from-transparent via-[#c5a059] to-transparent mb-6 opacity-60"></div>
+
+        <p class="font-sans text-[9px] md:text-[10px] leading-[2.8] tracking-[0.2em] uppercase text-[#5e0a16]/90 px-2">
+          Al comienzo de nuestro<br/>para siempre y la mejor parte<br/>de esta historia es<br/>celebrarla contigo.
         </p>
-      </div>
-    </div>
-  </div>
+      </div> {/* Fin relative z-20 */}
+      
+      </div> {/* Fin Contenedor de la tarjeta (animate-float) */}
+    </div> {/* Fin welcome-card-reveal */}
+  </div> {/* Fin CONTENEDOR 1 */}
 
   {/* CONTENEDOR 2: Línea de Tiempo */}
   <div class="max-w-lg mx-auto relative z-10 pt-12 pb-16 px-4">
@@ -123,6 +138,21 @@ const events = [
         }
       });
     };
+
+    // Intersection Observer para la tarjeta de Bienvenida
+    const welcomeCard = document.getElementById('welcome-card-reveal');
+    if (welcomeCard) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            welcomeCard.classList.remove('opacity-0', 'translate-y-12');
+            welcomeCard.classList.add('opacity-100', 'translate-y-0');
+            observer.unobserve(welcomeCard);
+          }
+        });
+      }, { threshold: 0.2 });
+      observer.observe(welcomeCard);
+    }
 
     window.addEventListener('scroll', updateTimelineScroll, { passive: true });
     window.addEventListener('resize', updateTimelineScroll, { passive: true });
