@@ -5,9 +5,10 @@ export interface TimelineItemProps {
   time: string;
   iconUrl: string;
   index: number;
+  scaleClass?: string;
 }
 
-export default function TimelineItem({ title, time, iconUrl, index }: TimelineItemProps) {
+export default function TimelineItem({ title, time, iconUrl, index, scaleClass = "" }: TimelineItemProps) {
   return (
     <div 
       data-scroll-timeline
@@ -23,12 +24,12 @@ export default function TimelineItem({ title, time, iconUrl, index }: TimelineIt
 
       {/* Content Container (Icon + Text) */}
       <div className="flex items-center gap-6 md:gap-8 ml-6 md:ml-8">
-        {/* Icon Container (enlarged for premium visibility) */}
+        {/* Icon Container (original size) */}
         <div className="w-18 h-18 md:w-[84px] md:h-[84px] flex items-center justify-center shrink-0">
           <img 
             src={iconUrl} 
             alt={title} 
-            className="w-full h-full object-contain opacity-95 filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.3)] animate-subtle-float"
+            className={`w-full h-full object-contain opacity-95 filter drop-shadow-[0_2px_6px_rgba(0,0,0,0.3)] animate-subtle-float ${scaleClass}`}
           />
         </div>
 
