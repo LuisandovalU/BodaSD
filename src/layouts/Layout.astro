@@ -85,6 +85,15 @@ const { title } = Astro.props;
 		box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 		transition: all 0.3s ease;
 		outline: none;
+		opacity: 0;
+		pointer-events: none;
+		transform: translateY(20px);
+	}
+
+	#music-toggle.visible {
+		opacity: 1;
+		pointer-events: auto;
+		transform: translateY(0);
 	}
 
 	#music-toggle:hover {
@@ -157,6 +166,11 @@ const { title } = Astro.props;
 			waves.style.display = 'none';
 			btn.style.borderColor = 'rgba(197,160,89,0.35)';
 		}
+		
+		// Mostrar el botón de música una vez que haya interacción
+		if (btn) {
+			btn.classList.add('visible');
+		}
 	}
 
 	btn?.addEventListener('click', () => {
@@ -165,13 +179,14 @@ const { title } = Astro.props;
 
 	// Intentar reproducir con el primer toque/clic en la página
 	const startOnFirstInteraction = () => {
-		if (!isPlaying && audio.src) {
-			// Solo si el archivo existe (no error 404)
-			audio.addEventListener('canplay', () => {
-				setPlaying(true);
-			}, { once: true });
-			audio.load();
+		if (btn) {
+			btn.classList.add('visible');
 		}
+		
+		if (!isPlaying) {
+			setPlaying(true);
+		}
+		
 		document.removeEventListener('click', startOnFirstInteraction);
 		document.removeEventListener('touchstart', startOnFirstInteraction);
 	};

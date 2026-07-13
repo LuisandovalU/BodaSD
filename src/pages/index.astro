@@ -14,28 +14,30 @@ import IntroOverlay from '../components/IntroOverlay.astro';
 	<!-- Overlay Inicial del Sobre Cerrado -->
 	<IntroOverlay />
 
-	<main>
-		<!-- 1. Portada (con hora 3PM, versículo y botón calendario) -->
-		<Hero />
+	<div class="max-w-[500px] mx-auto bg-brand-ivory min-h-screen shadow-[0_0_60px_rgba(0,0,0,0.6)] relative overflow-x-hidden border-x border-[#c5a059]/20">
+		<main>
+			<!-- 1. Portada (con hora 3PM, versículo y botón calendario) -->
+			<Hero />
 
-		<Welcome />
+			<Welcome />
 
-		<!-- 3. Bienvenida + The Details / Cronograma -->
-		<Timeline />
+			<!-- 3. Bienvenida + The Details / Cronograma -->
+			<Timeline />
 
-		<!-- 4. Dress Code (paleta de colores) -->
-		<DressCode />
+			<!-- 4. Dress Code (paleta de colores) -->
+			<DressCode />
 
-		<!-- 5. Cómo llegar -->
-		<HowToArrive />
+			<!-- 5. Cómo llegar -->
+			<HowToArrive />
 
-		<!-- 6. Nota importante (adultos / invitación personal) -->
-		<Information />
+			<!-- 6. Nota importante (adultos / invitación personal) -->
+			<Information />
 
-		<!-- 7. Regalos (lluvia de sobres – con animación de sobre) -->
-		<!-- ScrollEnvelope está incluido dentro de Information.astro -->
+			<!-- 7. Regalos (lluvia de sobres – con animación de sobre) -->
+			<!-- ScrollEnvelope está incluido dentro de Information.astro -->
 
-		<!-- 8. Confirmación de asistencia -->
-		<RSVP />
-	</main>
+			<!-- 8. Confirmación de asistencia -->
+			<RSVP />
+		</main>
+	</div>
 </Layout>

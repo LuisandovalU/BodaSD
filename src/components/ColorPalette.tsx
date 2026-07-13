@@ -42,7 +42,7 @@ export default function ColorPalette({ colors, title, isBanned = false }: ColorP
               className="relative cursor-pointer"
             >
               <div 
-                className={`w-8 h-8 md:w-10 md:h-10 rounded-full shadow-inner border-[0.5px] border-black/20 transition-all duration-300 ${isBanned ? 'opacity-80' : ''} ${selectedIndex === index ? 'ring-2 ring-offset-2 ring-[#c5a059] scale-110' : ''}`}
+                className={`w-8 h-8 md:w-10 md:h-10 rounded-full shadow-inner border-[0.5px] border-black/20 transition-all duration-300 ${selectedIndex === index ? 'ring-2 ring-offset-2 ring-[#c5a059] scale-110' : ''}`}
                 style={{ backgroundColor: color.hex }}
               />
               {isBanned && (
