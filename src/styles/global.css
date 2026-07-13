@@ -110,7 +110,7 @@
   .marquee-track {
     display: flex;
     flex-shrink: 0;
-    animation: scrollMarquee 25s linear infinite;
+    animation: scrollMarquee 60s linear infinite;
   }
   
   /* Pausa al poner el cursor encima (desktop) o tocar (móvil) */

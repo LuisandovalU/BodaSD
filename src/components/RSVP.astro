@@ -10,93 +10,97 @@ const whatsappNumber = '521XXXXXXXXXX';
   {/* Fondo sutil de papel */}
   <div class="rsvp-bg"></div>
 
-  <div class="rsvp-container">
-
-    {/* Imagen de confirmación */}
-    <div class="rsvp-header">
-      <img 
-        src="/confirma.webp" 
-        alt="Confirmación de Asistencia" 
-        class="rsvp-header-img" 
-      />
-      <p class="rsvp-subtitle">¡Nos encantaría celebrar contigo!</p>
-    </div>
-
-    {/* Formulario */}
-    <div class="rsvp-card">
-
-      <form id="rsvp-form" class="rsvp-form" novalidate>
-
-        {/* Campo nombre */}
-        <div class="rsvp-field">
-          <label for="rsvp-name" class="rsvp-label">
-            <span class="rsvp-label-num">01</span>
-            Nombre Completo
-          </label>
-          <input
-            type="text"
-            id="rsvp-name"
-            name="name"
-            required
-            autocomplete="name"
-            placeholder="Tu nombre completo"
-            class="rsvp-input"
-          />
+  <div class="relative z-10 w-full max-w-5xl mx-auto flex flex-col items-center">
+    
+    <div class="w-full flex flex-col lg:flex-row lg:items-start lg:justify-center gap-10 lg:gap-16 px-4">
+      {/* Izquierda en Desktop: Imagen y subtítulo */}
+      <div class="rsvp-header flex-1 flex flex-col items-center lg:items-start lg:mt-10">
+        <img 
+          src="/confirma.webp" 
+          alt="Confirmación de Asistencia" 
+          class="rsvp-header-img lg:origin-left" 
+        />
+        <p class="rsvp-subtitle lg:text-left mt-6">¡Nos encantaría celebrar contigo!</p>
+        
+        {/* Firma en desktop (lado izquierdo abajo) */}
+        <div class="hidden lg:flex flex-col items-start mt-20">
+          <p class="font-sans italic font-light text-[#6b1424] text-[13px] tracking-[0.25em] mb-1 opacity-90">con amor:</p>
+          <img src="/sebasdani_wine.webp" alt="Sebastián & Daniela" class="rsvp-sig-large origin-left" />
         </div>
+      </div>
 
-        {/* Campo asistencia */}
-        <div class="rsvp-field">
-          <span class="rsvp-label">
-            <span class="rsvp-label-num">02</span>
-            ¿Nos acompañarás?
-          </span>
+      {/* Derecha en Desktop: Formulario */}
+      <div class="flex-1 w-full max-w-md mx-auto lg:mx-0">
+        <div class="rsvp-card">
+          <form id="rsvp-form" class="rsvp-form" novalidate>
+            {/* Campo nombre */}
+            <div class="rsvp-field">
+              <label for="rsvp-name" class="rsvp-label">
+                <span class="rsvp-label-num">01</span>
+                Nombre Completo
+              </label>
+              <input
+                type="text"
+                id="rsvp-name"
+                name="name"
+                required
+                autocomplete="name"
+                placeholder="Tu nombre completo"
+                class="rsvp-input"
+              />
+            </div>
 
-          <div class="rsvp-choices">
-            <label class="rsvp-choice" id="choice-yes">
-              <input type="radio" name="attendance" value="yes" required class="rsvp-radio" id="radio-yes" />
-              <span class="rsvp-choice-box">
-                <span class="rsvp-choice-text">¡Sí, ahí estaré!</span>
+            {/* Campo asistencia */}
+            <div class="rsvp-field">
+              <span class="rsvp-label">
+                <span class="rsvp-label-num">02</span>
+                ¿Nos acompañarás?
               </span>
-            </label>
+              <div class="rsvp-choices">
+                <label class="rsvp-choice" id="choice-yes">
+                  <input type="radio" name="attendance" value="yes" required class="rsvp-radio" id="radio-yes" />
+                  <span class="rsvp-choice-box">
+                    <span class="rsvp-choice-text">¡Sí, ahí estaré!</span>
+                  </span>
+                </label>
+                <label class="rsvp-choice" id="choice-no">
+                  <input type="radio" name="attendance" value="no" class="rsvp-radio" id="radio-no" />
+                  <span class="rsvp-choice-box">
+                    <span class="rsvp-choice-text">Con cariño, no podré asistir.</span>
+                  </span>
+                </label>
+              </div>
+            </div>
 
-            <label class="rsvp-choice" id="choice-no">
-              <input type="radio" name="attendance" value="no" class="rsvp-radio" id="radio-no" />
-              <span class="rsvp-choice-box">
-                <span class="rsvp-choice-text">Con cariño, no podré asistir.</span>
-              </span>
-            </label>
-          </div>
+            {/* Campo canción */}
+            <div class="rsvp-field">
+              <label for="rsvp-song" class="rsvp-label">
+                <span class="rsvp-label-num">03</span>
+                ¿Qué canción no puede faltar?
+              </label>
+              <input
+                type="text"
+                id="rsvp-song"
+                name="song"
+                placeholder="Ej. La Gota Fría o Payaso de Rodeo..."
+                class="rsvp-input"
+              />
+            </div>
+
+            {/* Botón enviar */}
+            <button type="submit" class="rsvp-submit" id="btn-rsvp-submit">
+              <svg class="rsvp-submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12zm0 0h7.5" />
+              </svg>
+              Confirmar Asistencia
+            </button>
+          </form>
         </div>
-
-        {/* Campo canción */}
-        <div class="rsvp-field">
-          <label for="rsvp-song" class="rsvp-label">
-            <span class="rsvp-label-num">03</span>
-            ¿Qué canción no puede faltar?
-          </label>
-          <input
-            type="text"
-            id="rsvp-song"
-            name="song"
-            placeholder="Ej. La Gota Fría o Payaso de Rodeo..."
-            class="rsvp-input"
-          />
-        </div>
-
-        {/* Botón enviar */}
-        <button type="submit" class="rsvp-submit" id="btn-rsvp-submit">
-          <svg class="rsvp-submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12zm0 0h7.5" />
-          </svg>
-          Confirmar Asistencia
-        </button>
-
-      </form>
-
+      </div>
     </div>
 
     {/* Galería Moderna Editorial (Slider Automático Infinito) */}
-    <div class="w-[125%] relative left-1/2 -translate-x-1/2 mt-16 mb-20 overflow-hidden flex group">
+    <div class="w-[125%] relative left-1/2 -translate-x-1/2 mt-20 mb-16 lg:mt-32 lg:mb-24 overflow-hidden flex group">
       <div class="marquee-track flex gap-4 pr-4">
         {[1, 3, 4, 10, 11, 12, 13].map((num) => (
           <div class="shrink-0 w-[65vw] sm:w-[320px] md:w-[400px] aspect-[4/5] relative">
@@ -124,8 +128,8 @@ const whatsappNumber = '521XXXXXXXXXX';
       </div>
     </div>
 
-    {/* Firma final */}
-    <div class="rsvp-signature">
+    {/* Firma final (visible solo en móvil) */}
+    <div class="rsvp-signature lg:hidden flex flex-col items-center">
       <p class="font-sans italic font-light text-[#6b1424] text-[13px] tracking-[0.25em] mb-1 opacity-90">con amor:</p>
       <img src="/sebasdani_wine.webp" alt="Sebastián & Daniela" class="rsvp-sig-large" />
     </div>
@@ -166,10 +170,6 @@ const whatsappNumber = '521XXXXXXXXXX';
   /* Header */
   .rsvp-header {
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
   }
 
   .rsvp-header-img {

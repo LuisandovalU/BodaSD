@@ -12,7 +12,7 @@ import { Image } from 'astro:assets';
   <div class="relative w-full flex flex-col items-center">
     
     {/* PARTE 1: Fondo verde con el sobre (hero.webp) */}
-    <div class="w-full h-[60vh] md:h-[70vh] relative overflow-hidden bg-[#3a4f3b]">
+    <div class="w-full h-[60vh] md:h-[70vh] lg:h-[80vh] relative overflow-hidden bg-[#3a4f3b]">
       <img src="/hero.webp" alt="Fondo Verde Sobre" class="w-full h-full object-cover object-bottom opacity-100 animate-slow-zoom origin-center" onerror="this.style.display='none'" loading="eager" fetchpriority="high" />
       {/* Gradiente oscuro sutil para darle profundidad */}
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 mix-blend-overlay"></div>
@@ -48,8 +48,8 @@ import { Image } from 'astro:assets';
     </div>
 
     {/* PARTE 3: Tarjeta Blanca ("Save our Date") - Flotando entre ambas secciones */}
-    <div class="absolute top-[18vh] md:top-[22vh] left-0 w-full flex justify-center z-10 hidden opacity-0 translate-y-32 scale-90 transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]" id="hero-card-wrapper">
-      <div class="w-[85%] max-w-sm aspect-[3/4] p-10 flex flex-col items-center justify-between border-[0.5px] border-[#c5a059]/50 rounded-sm overflow-hidden bg-[#faf8f5] animate-float">
+    <div class="absolute top-[18vh] md:top-[22vh] lg:top-[25vh] left-0 w-full flex justify-center z-10 hidden opacity-0 translate-y-32 scale-90 transition-all duration-[1200ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]" id="hero-card-wrapper">
+      <div class="w-[85%] max-w-sm lg:max-w-md xl:max-w-lg aspect-[3/4] p-10 lg:p-14 flex flex-col items-center justify-between border-[0.5px] border-[#c5a059]/50 rounded-sm overflow-hidden bg-[#faf8f5] animate-float">
         {/* Textura de la tarjeta */}
         <div class="absolute inset-0 z-0 bg-[#faf8f5]">
            <img src="/sobre.webp" alt="Textura Tarjeta" class="w-full h-full object-cover opacity-80" onerror="this.style.display='none'" loading="eager" fetchpriority="high" />
@@ -63,7 +63,7 @@ import { Image } from 'astro:assets';
             <img 
               src="/save-our-date.webp" 
               alt="Save our Date" 
-              class="w-full max-w-[200px] md:max-w-[260px] h-auto object-contain" 
+              class="w-full max-w-[200px] md:max-w-[260px] lg:max-w-[320px] h-auto object-contain" 
               onerror="this.style.display='none'"
               loading="eager"
               fetchpriority="high"
@@ -80,7 +80,7 @@ import { Image } from 'astro:assets';
   </div>
 
   {/* PARTE 3: Foto de los Novios */}
-  <div class="w-full h-[60vh] md:h-[80vh] relative bg-black">
+  <div class="w-full h-[60vh] md:h-[80vh] lg:h-[90vh] relative bg-black">
     <img 
       src="/fotonovios1.webp" 
       alt="Sebastián y Daniela" 
@@ -105,8 +105,8 @@ import { Image } from 'astro:assets';
     </div>
     
     {/* Nombres sobre la foto */}
-    <div class="absolute bottom-16 md:bottom-24 left-0 w-full flex justify-center z-20 px-4 pointer-events-none">
-      <div class="w-[85%] max-w-[350px] md:max-w-[450px] flex justify-center">
+    <div class="absolute bottom-16 md:bottom-24 lg:bottom-32 left-0 w-full flex justify-center z-20 px-4 pointer-events-none">
+      <div class="w-[85%] max-w-[350px] md:max-w-[450px] lg:max-w-[550px] flex justify-center">
          <img 
             src="/sebasdani.webp" 
             alt="Sebastián y Daniela" 
