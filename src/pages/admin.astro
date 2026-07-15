@@ -1,0 +1,843 @@
+---
+// src/pages/admin.astro
+// Panel de administración móvil para gestionar invitados
+---
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Admin — Boda S&D</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ===== LOGIN ===== -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-glow"></div>
+    <div class="login-card">
+      <div class="login-monogram">S<span>&</span>D</div>
+      <h1 class="login-title">Panel de Administración</h1>
+      <form id="login-form">
+        <div class="login-field">
+          <input type="password" id="login-pass" placeholder="Contraseña" autocomplete="current-password" />
+        </div>
+        <button type="submit" class="login-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="login-btn-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/></svg>
+          Ingresar
+        </button>
+        <p class="login-error" id="login-error">Contraseña incorrecta</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== DASHBOARD ===== -->
+  <div class="dashboard" id="dashboard">
+    
+    <!-- Header fijo -->
+    <header class="app-header">
+      <div class="app-header-left">
+        <span class="app-logo">S&D</span>
+        <span class="app-title">Invitados</span>
+      </div>
+      <button class="btn-icon" id="btn-logout" title="Cerrar sesión">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"/></svg>
+      </button>
+    </header>
+
+    <!-- Stats Cards -->
+    <div class="stats-scroll">
+      <div class="stat-card stat-total">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+        </div>
+        <div class="stat-number" id="stat-total">0</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-card stat-yes">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="stat-number" id="stat-yes">0</div>
+        <div class="stat-label">Asisten</div>
+      </div>
+      <div class="stat-card stat-no">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="stat-number" id="stat-no">0</div>
+        <div class="stat-label">No asisten</div>
+      </div>
+      <div class="stat-card stat-paid">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg>
+        </div>
+        <div class="stat-number" id="stat-paid">0</div>
+        <div class="stat-label">Pagaron</div>
+      </div>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-bar">
+      <button class="filter-tab active" data-filter="all">Todos</button>
+      <button class="filter-tab" data-filter="yes">Asisten</button>
+      <button class="filter-tab" data-filter="no">No asisten</button>
+      <button class="filter-tab" data-filter="paid">Pagaron</button>
+      <button class="filter-tab" data-filter="pending">Sin pago</button>
+    </div>
+
+    <!-- Guest List -->
+    <div class="guest-list" id="guest-list">
+      <div class="empty-state" id="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="empty-icon"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+        <p>No hay registros aún</p>
+        <span>Los invitados aparecerán aquí cuando confirmen su asistencia</span>
+      </div>
+    </div>
+
+    <!-- Bottom spacer for safe area -->
+    <div style="height: env(safe-area-inset-bottom, 20px);"></div>
+  </div>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
+      min-height: 100vh;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== LOGIN ===== */
+    .login-screen {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: #0a0a0a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(107,20,36,0.15) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .login-card {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .login-monogram {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #c5a059;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.15em;
+    }
+
+    .login-monogram span {
+      font-size: 1.5rem;
+      color: #6b1424;
+      margin: 0 0.3rem;
+    }
+
+    .login-title {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: #555;
+      margin-bottom: 2.5rem;
+    }
+
+    .login-field input {
+      width: 100%;
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      color: #e5e5e5;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+      text-align: center;
+      letter-spacing: 0.15em;
+    }
+
+    .login-field input:focus { border-color: #c5a059; }
+    .login-field input::placeholder { color: #444; letter-spacing: 0.1em; }
+
+    .login-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #6b1424, #8a1a30);
+      color: #faf8f5;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 1rem;
+    }
+
+    .login-btn:active { transform: scale(0.97); }
+    .login-btn-icon { width: 18px; height: 18px; }
+
+    .login-error {
+      color: #e74c3c;
+      font-size: 0.75rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    /* ===== APP HEADER ===== */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      padding-top: calc(env(safe-area-inset-top, 0px) + 1rem);
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .app-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .app-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #c5a059;
+      letter-spacing: 0.1em;
+    }
+
+    .app-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #999;
+    }
+
+    .btn-icon {
+      background: transparent;
+      border: 1px solid #222;
+      border-radius: 10px;
+      padding: 0.5rem;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-icon svg { width: 20px; height: 20px; }
+    .btn-icon:hover, .btn-icon:active { border-color: #c5a059; color: #c5a059; }
+
+    /* ===== STATS ===== */
+    .stats-scroll {
+      display: flex;
+      gap: 0.75rem;
+      padding: 1.25rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .stats-scroll::-webkit-scrollbar { display: none; }
+
+    .stat-card {
+      flex: 0 0 auto;
+      min-width: 120px;
+      background: #141414;
+      border: 1px solid #1e1e1e;
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-icon {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-icon svg { width: 22px; height: 22px; }
+
+    .stat-total .stat-icon svg { color: #c5a059; }
+    .stat-yes .stat-icon svg { color: #2ecc71; }
+    .stat-no .stat-icon svg { color: #e74c3c; }
+    .stat-paid .stat-icon svg { color: #3498db; }
+
+    .stat-number {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .stat-total .stat-number { color: #c5a059; }
+    .stat-yes .stat-number { color: #2ecc71; }
+    .stat-no .stat-number { color: #e74c3c; }
+    .stat-paid .stat-number { color: #3498db; }
+
+    .stat-label {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #555;
+      margin-top: 0.2rem;
+    }
+
+    /* ===== FILTERS ===== */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0 1.25rem 1rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .filter-bar::-webkit-scrollbar { display: none; }
+
+    .filter-tab {
+      flex: 0 0 auto;
+      background: #141414;
+      border: 1px solid #1e1e1e;
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      color: #777;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .filter-tab:active { transform: scale(0.95); }
+
+    .filter-tab.active {
+      background: #6b1424;
+      color: #faf8f5;
+      border-color: #6b1424;
+    }
+
+    /* ===== GUEST LIST ===== */
+    .guest-list {
+      padding: 0 1.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .guest-card {
+      background: #141414;
+      border: 1px solid #1e1e1e;
+      border-radius: 16px;
+      padding: 1.25rem;
+      transition: all 0.3s;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .guest-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .guest-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .guest-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .guest-avatar-yes {
+      background: rgba(46,204,113,0.12);
+      color: #2ecc71;
+    }
+
+    .guest-avatar-no {
+      background: rgba(231,76,60,0.12);
+      color: #e74c3c;
+    }
+
+    .guest-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #e5e5e5;
+    }
+
+    .guest-date {
+      font-size: 0.65rem;
+      color: #555;
+      margin-top: 0.15rem;
+    }
+
+    .guest-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 50px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-yes { background: rgba(46,204,113,0.12); color: #2ecc71; }
+    .badge-no { background: rgba(231,76,60,0.12); color: #e74c3c; }
+
+    .guest-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .guest-song {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .guest-song svg { width: 14px; height: 14px; color: #c5a059; flex-shrink: 0; }
+
+    .btn-payment {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 50px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .btn-payment svg { width: 14px; height: 14px; }
+
+    .btn-payment-pending {
+      background: rgba(231,76,60,0.1);
+      color: #e74c3c;
+      border: 1px solid rgba(231,76,60,0.2);
+    }
+
+    .btn-payment-pending:active { transform: scale(0.95); }
+
+    .btn-payment-paid {
+      background: rgba(52,152,219,0.1);
+      color: #3498db;
+      border: 1px solid rgba(52,152,219,0.2);
+      cursor: default;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #444;
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .empty-state p {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 0.3rem;
+    }
+
+    .empty-state span {
+      font-size: 0.7rem;
+      color: #444;
+    }
+
+    /* Confirm Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-sheet {
+      background: #1a1a1a;
+      border-radius: 20px 20px 0 0;
+      padding: 2rem 1.5rem;
+      padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 1.5rem);
+      width: 100%;
+      max-width: 500px;
+      animation: slideUp 0.3s ease;
+      text-align: center;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-handle {
+      width: 36px;
+      height: 4px;
+      background: #333;
+      border-radius: 4px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .modal-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      color: #e5e5e5;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+    }
+
+    .modal-text {
+      font-size: 0.8rem;
+      color: #777;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .modal-name {
+      color: #c5a059;
+      font-weight: 600;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .modal-btn {
+      flex: 1;
+      padding: 0.9rem;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .modal-btn:active { transform: scale(0.97); }
+
+    .modal-btn-cancel {
+      background: #222;
+      color: #999;
+    }
+
+    .modal-btn-confirm {
+      background: linear-gradient(135deg, #2980b9, #3498db);
+      color: white;
+    }
+
+    /* Dashboard hidden by default */
+    .dashboard { display: none; }
+
+    /* Desktop adjustments */
+    @media (min-width: 768px) {
+      .stats-scroll { justify-content: center; }
+      .stat-card { min-width: 160px; }
+      .guest-list { max-width: 600px; margin: 0 auto; }
+      .filter-bar { justify-content: center; }
+    }
+  </style>
+
+  <script is:inline>
+    const ADMIN_PASS = 'bodasd2026';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginScreen = document.getElementById('login-screen');
+      const dashboard = document.getElementById('dashboard');
+      const loginForm = document.getElementById('login-form');
+      const loginError = document.getElementById('login-error');
+      const guestList = document.getElementById('guest-list');
+      const emptyState = document.getElementById('empty-state');
+      const btnLogout = document.getElementById('btn-logout');
+
+      // Auth check
+      if (sessionStorage.getItem('admin_auth') === 'true') {
+        if (loginScreen) loginScreen.style.display = 'none';
+        if (dashboard) dashboard.style.display = 'block';
+        renderAll();
+      }
+
+      if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const passInput = document.getElementById('login-pass');
+          const pass = passInput ? passInput.value : '';
+          
+          if (pass === ADMIN_PASS) {
+            sessionStorage.setItem('admin_auth', 'true');
+            if (loginScreen) loginScreen.style.display = 'none';
+            if (dashboard) dashboard.style.display = 'block';
+            renderAll();
+          } else {
+            if (loginError) {
+              loginError.style.display = 'block';
+              setTimeout(() => { loginError.style.display = 'none'; }, 2500);
+            }
+          }
+        });
+      }
+
+      if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+          sessionStorage.removeItem('admin_auth');
+          location.reload();
+        });
+      }
+
+      // Filters
+      let currentFilter = 'all';
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentFilter = tab.dataset.filter || 'all';
+          renderGuests();
+        });
+      });
+
+      function getRegistros() {
+        try {
+          return JSON.parse(localStorage.getItem('rsvp_registros') || '[]');
+        } catch(e) {
+          return [];
+        }
+      }
+
+      function saveRegistros(registros) {
+        localStorage.setItem('rsvp_registros', JSON.stringify(registros));
+      }
+
+      function renderAll() {
+        renderStats();
+        renderGuests();
+      }
+
+      window.renderAll = renderAll; // expose to modal
+
+      function renderStats() {
+        const registros = getRegistros();
+        const total = registros.length;
+        const yes = registros.filter(r => r.asiste).length;
+        const no = total - yes;
+        const paid = registros.filter(r => r.pagado).length;
+
+        const statTotal = document.getElementById('stat-total');
+        const statYes = document.getElementById('stat-yes');
+        const statNo = document.getElementById('stat-no');
+        const statPaid = document.getElementById('stat-paid');
+
+        if (statTotal) statTotal.textContent = String(total);
+        if (statYes) statYes.textContent = String(yes);
+        if (statNo) statNo.textContent = String(no);
+        if (statPaid) statPaid.textContent = String(paid);
+      }
+
+      function renderGuests() {
+        const registros = getRegistros();
+        
+        let filtered = registros;
+        if (currentFilter === 'yes') filtered = registros.filter(r => r.asiste);
+        else if (currentFilter === 'no') filtered = registros.filter(r => !r.asiste);
+        else if (currentFilter === 'paid') filtered = registros.filter(r => r.pagado);
+        else if (currentFilter === 'pending') filtered = registros.filter(r => r.asiste && !r.pagado);
+
+        // Remove old guest cards
+        if (guestList) {
+          guestList.querySelectorAll('.guest-card').forEach(c => c.remove());
+        }
+
+        if (filtered.length === 0) {
+          if (emptyState) emptyState.style.display = 'block';
+          return;
+        }
+
+        if (emptyState) emptyState.style.display = 'none';
+
+        filtered.forEach((r, i) => {
+          const fecha = new Date(r.fecha);
+          const fechaStr = isNaN(fecha.getTime()) ? '' : fecha.toLocaleDateString('es-MX', {
+            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+          });
+          const initials = r.nombre ? r.nombre.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() : '??';
+
+          const card = document.createElement('div');
+          card.className = 'guest-card';
+          card.style.animationDelay = `${i * 0.05}s`;
+
+          // Para saber el índice real en el array original y poder actualizarlo
+          const realIndex = registros.findIndex(reg => reg.nombre === r.nombre && reg.fecha === r.fecha);
+
+          const paymentBtn = r.asiste
+            ? r.pagado
+              ? `<button class="btn-payment btn-payment-paid">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  Pagado
+                </button>`
+              : `<button class="btn-payment btn-payment-pending" data-idx="${realIndex}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  Sin pago
+                </button>`
+            : '';
+
+          card.innerHTML = `
+            <div class="guest-top">
+              <div class="guest-info">
+                <div class="guest-avatar ${r.asiste ? 'guest-avatar-yes' : 'guest-avatar-no'}">${initials}</div>
+                <div>
+                  <div class="guest-name">${r.nombre}</div>
+                  <div class="guest-date">${fechaStr}</div>
+                </div>
+              </div>
+              <span class="guest-badge ${r.asiste ? 'badge-yes' : 'badge-no'}">${r.asiste ? '✓ Sí' : '✗ No'}</span>
+            </div>
+            <div class="guest-bottom">
+              <div class="guest-song">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"/></svg>
+                <span>${r.cancion || '—'}</span>
+              </div>
+              ${paymentBtn}
+            </div>
+          `;
+
+          if (guestList) guestList.appendChild(card);
+        });
+
+        // Payment button handlers
+        if (guestList) {
+          guestList.querySelectorAll('.btn-payment-pending').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const idx = parseInt(btn.dataset.idx || '0');
+              const reg = getRegistros()[idx];
+              if (reg) {
+                showConfirmModal(reg.nombre, idx);
+              }
+            });
+          });
+        }
+      }
+
+      function showConfirmModal(nombre, idx) {
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.innerHTML = `
+          <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <h3 class="modal-title">Confirmar Pago</h3>
+            <p class="modal-text">¿Confirmas que <span class="modal-name">${nombre}</span> ya envió su comprobante de pago?</p>
+            <div class="modal-actions">
+              <button class="modal-btn modal-btn-cancel" id="modal-cancel">Cancelar</button>
+              <button class="modal-btn modal-btn-confirm" id="modal-confirm">Sí, confirmar</button>
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) { overlay.remove(); }
+        });
+
+        const btnCancel = document.getElementById('modal-cancel');
+        if (btnCancel) {
+          btnCancel.addEventListener('click', () => overlay.remove());
+        }
+
+        const btnConfirm = document.getElementById('modal-confirm');
+        if (btnConfirm) {
+          btnConfirm.addEventListener('click', () => {
+            const registros = getRegistros();
+            if (registros[idx]) {
+              registros[idx].pagado = true;
+              saveRegistros(registros);
+            }
+            overlay.remove();
+            if (window.renderAll) window.renderAll();
+          });
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
