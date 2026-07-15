@@ -31,21 +31,32 @@ const whatsappCO = '573138914271';
         <div class="flex-1 w-full max-w-md mx-auto lg:mx-0">
           <div class="rsvp-card">
             <form id="rsvp-form" class="rsvp-form" novalidate>
-              {/* Campo nombre */}
+              {/* Campos Nombre y Apellido */}
               <div class="rsvp-field">
-                <label for="rsvp-name" class="rsvp-label">
+                <label class="rsvp-label">
                   <span class="rsvp-label-num">01</span>
-                  Nombre y Apellido
+                  Tus Datos
                 </label>
-                <input
-                  type="text"
-                  id="rsvp-name"
-                  name="name"
-                  required
-                  autocomplete="name"
-                  placeholder="Tu nombre y apellido"
-                  class="rsvp-input"
-                />
+                <div class="flex flex-col sm:flex-row gap-4 w-full">
+                  <input
+                    type="text"
+                    id="rsvp-name"
+                    name="name"
+                    required
+                    autocomplete="given-name"
+                    placeholder="Nombre(s)"
+                    class="rsvp-input w-full"
+                  />
+                  <input
+                    type="text"
+                    id="rsvp-lastname"
+                    name="lastname"
+                    required
+                    autocomplete="family-name"
+                    placeholder="Apellido(s)"
+                    class="rsvp-input w-full"
+                  />
+                </div>
               </div>
 
               {/* Campo asistencia */}
@@ -729,11 +740,18 @@ const whatsappCO = '573138914271';
       e.preventDefault();
 
       const nameInput = document.getElementById('rsvp-name') as HTMLInputElement;
+      const lastNameInput = document.getElementById('rsvp-lastname') as HTMLInputElement;
       const attendanceInput = document.querySelector('input[name="attendance"]:checked') as HTMLInputElement;
 
       if (!nameInput?.value.trim()) {
         nameInput?.focus();
         if (nameInput) nameInput.style.borderColor = '#c5a059';
+        return;
+      }
+      
+      if (!lastNameInput?.value.trim()) {
+        lastNameInput?.focus();
+        if (lastNameInput) lastNameInput.style.borderColor = '#c5a059';
         return;
       }
 
@@ -744,6 +762,8 @@ const whatsappCO = '573138914271';
       }
 
       const name = nameInput.value.trim();
+      const lastName = lastNameInput.value.trim();
+      const fullName = `${name} ${lastName}`;
       const going = attendanceInput.value === 'yes';
       const songInput = document.getElementById('rsvp-song') as HTMLInputElement;
       const song = songInput ? songInput.value.trim() : '';
@@ -751,7 +771,7 @@ const whatsappCO = '573138914271';
       // Guardar en localStorage (demo temporal — será Firebase)
       const registros = JSON.parse(localStorage.getItem('rsvp_registros') || '[]');
       registros.push({
-        nombre: name,
+        nombre: fullName,
         asiste: going,
         cancion: song || '—',
         fecha: new Date().toISOString()
