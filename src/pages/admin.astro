@@ -625,7 +625,11 @@
     import { db } from '../firebase/client';
     import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
 
-    const ADMIN_PASS = 'bodasd2026';
+    const PASSWORDS = {
+      'bodasd2026': 'master', // Ve todo
+      'mexico2026': 'mx',     // Solo México
+      'colombia2026': 'co'    // Solo Colombia
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
       const loginScreen = document.getElementById('login-screen');
@@ -637,11 +641,13 @@
       const btnLogout = document.getElementById('btn-logout');
 
       let registros: any[] = [];
+      let currentRole = sessionStorage.getItem('admin_role') || '';
 
       // Auth check
-      if (sessionStorage.getItem('admin_auth') === 'true') {
+      if (currentRole) {
         if (loginScreen) loginScreen.style.display = 'none';
         if (dashboard) dashboard.style.display = 'block';
+        applyRoleUI();
         initFirebaseListener();
       }
 
@@ -651,10 +657,15 @@
           const passInput = document.getElementById('login-pass') as HTMLInputElement;
           const pass = passInput ? passInput.value : '';
           
-          if (pass === ADMIN_PASS) {
-            sessionStorage.setItem('admin_auth', 'true');
+          // @ts-ignore
+          const role = PASSWORDS[pass];
+          
+          if (role) {
+            sessionStorage.setItem('admin_role', role);
+            currentRole = role;
             if (loginScreen) loginScreen.style.display = 'none';
             if (dashboard) dashboard.style.display = 'block';
+            applyRoleUI();
             initFirebaseListener();
           } else {
             if (loginError) {
@@ -667,9 +678,19 @@
 
       if (btnLogout) {
         btnLogout.addEventListener('click', () => {
-          sessionStorage.removeItem('admin_auth');
+          sessionStorage.removeItem('admin_role');
           location.reload();
         });
+      }
+
+      function applyRoleUI() {
+        if (currentRole !== 'master') {
+          // Ocultar tabs de país si no es master
+          const mxTab = document.querySelector('.filter-tab[data-filter="mx"]') as HTMLElement;
+          const coTab = document.querySelector('.filter-tab[data-filter="co"]') as HTMLElement;
+          if (mxTab) mxTab.style.display = 'none';
+          if (coTab) coTab.style.display = 'none';
+        }
       }
 
       // Filters
@@ -686,10 +707,20 @@
       function initFirebaseListener() {
         const guestsRef = collection(db, 'invitados');
         onSnapshot(guestsRef, (snapshot) => {
-          registros = [];
+          let rawRegistros: any[] = [];
           snapshot.forEach((docSnap) => {
-            registros.push({ id: docSnap.id, ...docSnap.data() });
+            rawRegistros.push({ id: docSnap.id, ...docSnap.data() });
           });
+          
+          // Filtrar por rol
+          if (currentRole === 'mx') {
+            registros = rawRegistros.filter(r => r.pais === 'MX');
+          } else if (currentRole === 'co') {
+            registros = rawRegistros.filter(r => r.pais === 'CO');
+          } else {
+            registros = rawRegistros; // Master ve todo
+          }
+
           // Order by date descending
           registros.sort((a, b) => new Date(b.fechaRegistro).getTime() - new Date(a.fechaRegistro).getTime());
           renderAll();
