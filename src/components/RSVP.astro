@@ -771,6 +771,9 @@ const whatsappCO = '573138914271';
       const going = attendanceInput.value === 'yes';
       const songInput = document.getElementById('rsvp-song') as HTMLInputElement;
       const song = songInput ? songInput.value.trim() : '';
+      
+      // Determinar país según el tab activo
+      const pais = tabMX?.classList.contains('active') ? 'MX' : 'CO';
 
       try {
         const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -792,6 +795,7 @@ const whatsappCO = '573138914271';
           await updateDoc(doc(db, 'invitados', guestDoc.id), {
             asiste: going,
             cancion: song || '—',
+            pais: pais,
             fechaActualizacion: new Date().toISOString()
           });
         } else {
@@ -803,6 +807,7 @@ const whatsappCO = '573138914271';
             nombreCompleto: fullName,
             asiste: going,
             cancion: song || '—',
+            pais: pais,
             fechaRegistro: new Date().toISOString()
           });
         }

@@ -88,6 +88,8 @@
       <button class="filter-tab" data-filter="no">No asisten</button>
       <button class="filter-tab" data-filter="paid">Pagaron</button>
       <button class="filter-tab" data-filter="pending">Sin pago</button>
+      <button class="filter-tab" data-filter="mx">🇲🇽 México</button>
+      <button class="filter-tab" data-filter="co">🇨🇴 Colombia</button>
     </div>
 
     <!-- Guest List -->
@@ -727,6 +729,8 @@
         else if (currentFilter === 'no') filtered = registros.filter(r => !r.asiste);
         else if (currentFilter === 'paid') filtered = registros.filter(r => r.pagado);
         else if (currentFilter === 'pending') filtered = registros.filter(r => r.asiste && !r.pagado);
+        else if (currentFilter === 'mx') filtered = registros.filter(r => r.pais === 'MX');
+        else if (currentFilter === 'co') filtered = registros.filter(r => r.pais === 'CO');
 
         // Remove old guest cards
         if (guestList) {
@@ -746,6 +750,7 @@
             day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
           });
           const initials = r.nombre ? r.nombre.split(' ').map((w: string) => w[0]).slice(0, 2).join('').toUpperCase() : '??';
+          const paisBadge = r.pais === 'CO' ? '🇨🇴' : '🇲🇽';
 
           const card = document.createElement('div');
           card.className = 'guest-card';
@@ -771,7 +776,7 @@
               <div class="guest-info">
                 <div class="guest-avatar ${r.asiste ? 'guest-avatar-yes' : 'guest-avatar-no'}">${initials}</div>
                 <div>
-                  <div class="guest-name">${r.nombreCompleto || r.nombre}</div>
+                  <div class="guest-name">${paisBadge} ${r.nombreCompleto || r.nombre}</div>
                   <div class="guest-date">${fechaStr}</div>
                 </div>
               </div>
