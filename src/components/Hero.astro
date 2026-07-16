@@ -19,32 +19,32 @@ import { Image } from 'astro:assets';
     </div>
 
     {/* PARTE 2: Flor y Detalles de Fecha/Lugar */}
-    <div class="w-full lg:w-1/2 h-[65vh] md:h-[75vh] lg:h-auto relative flex flex-col items-center justify-end bg-[#671104]">
+    <div class="w-full lg:w-1/2 h-[75vh] md:h-[80vh] lg:h-auto relative flex flex-col items-center justify-end bg-[#671104]">
       {/* Imagen de la Flor */}
       <div class="absolute inset-0 z-0">
         <img src="/flor.webp" alt="Flor" class="w-full h-full object-cover" onerror="this.style.display='none'" loading="eager" />
       </div>
 
       {/* Texto Detalles superpuesto en la flor */}
-      <div class="relative z-10 text-center space-y-4 md:space-y-6 text-[#faf8f5] w-full px-4 pb-12 md:pb-20">
+      <div class="relative z-10 text-center space-y-2.5 md:space-y-4 text-[#faf8f5] w-full px-4 pb-10 md:pb-16">
         <p class="font-serif tracking-[0.4em] text-sm md:text-base uppercase" data-scroll-fade>Viernes 11</p>
         
         {/* HORA ACTUALIZADA A LAS 3 PM */}
         <p class="font-sans tracking-[0.2em] text-sm font-light" data-scroll-fade>3 : 0 0 P M</p>
         
-        <p class="font-serif tracking-[0.3em] text-[11px] md:text-sm uppercase leading-loose [text-wrap:balance] mx-auto max-w-[85%]" data-scroll-fade>
+        <p class="font-serif tracking-[0.3em] text-[11px] md:text-sm uppercase leading-loose w-full" data-scroll-fade>
           Hacienda San Pablo<br/>
           <span class="text-[9px] md:text-[11px] tracking-[0.4em]">Subachoque . Colombia</span>
         </p>
 
         {/* NUEVO VERSÍCULO */}
-        <div class="mt-8 md:mt-10 px-4 w-full max-w-[85%] md:max-w-md mx-auto" data-scroll-fade>
-          <p class="font-serif italic text-[11px] md:text-sm leading-relaxed tracking-widest uppercase mx-auto">
+        <div class="mt-4 md:mt-8 px-2 w-full md:max-w-lg mx-auto" data-scroll-fade>
+          <p class="font-serif italic text-[10px] md:text-xs leading-loose tracking-widest uppercase mx-auto">
             “Y sobre todo, ámense unos a otros,<br/>
             porque el amor es el mejor lazo de<br/>
             unión.”
           </p>
-          <p class="font-sans tracking-[0.2em] text-[9px] md:text-[10px] mt-4 uppercase font-light">
+          <p class="font-sans tracking-[0.2em] text-[8px] md:text-[10px] mt-3 uppercase font-light">
             Colosenses 3:14
           </p>
         </div>
