@@ -497,6 +497,21 @@
       cursor: default;
     }
 
+    .btn-delete {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(231,76,60,0.1);
+      color: #e74c3c;
+      border: 1px solid rgba(231,76,60,0.2);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-delete:active { transform: scale(0.9); }
+
     /* Empty State */
     .empty-state {
       text-align: center;
@@ -623,7 +638,7 @@
 
   <script>
     import { db } from '../firebase/client';
-    import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
+    import { collection, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
     const PASSWORDS = {
       'bodasd2026': 'master', // Ve todo
@@ -802,6 +817,12 @@
                 </button>`
             : '';
 
+          const deleteBtn = currentRole === 'master'
+            ? `<button class="btn-delete" data-id="${docId}" title="Eliminar invitado">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+               </button>`
+            : '';
+
           card.innerHTML = `
             <div class="guest-top">
               <div class="guest-info">
@@ -811,7 +832,10 @@
                   <div class="guest-date">${fechaStr}</div>
                 </div>
               </div>
-              <span class="guest-badge ${r.asiste ? 'badge-yes' : 'badge-no'}">${r.asiste ? '✓ Sí' : '✗ No'}</span>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <span class="guest-badge ${r.asiste ? 'badge-yes' : 'badge-no'}">${r.asiste ? '✓ Sí' : '✗ No'}</span>
+                ${deleteBtn}
+              </div>
             </div>
             <div class="guest-bottom">
               <div class="guest-song">
@@ -833,6 +857,22 @@
               const reg = registros.find(r => r.id === docId);
               if (reg) {
                 showConfirmModal(reg.nombreCompleto || reg.nombre, docId);
+              }
+            });
+          });
+
+          // Delete buttons
+          guestList.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const docId = (btn as HTMLElement).dataset.id || '';
+              const reg = registros.find(r => r.id === docId);
+              if (reg && confirm(`¿Estás seguro de que deseas ELIMINAR permanentemente a ${reg.nombreCompleto || reg.nombre}?`)) {
+                try {
+                  await deleteDoc(doc(db, 'invitados', docId));
+                } catch (e) {
+                  console.error("Error deleting document:", e);
+                  alert("No se pudo eliminar el registro.");
+                }
               }
             });
           });
