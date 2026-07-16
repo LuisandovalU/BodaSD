@@ -59,10 +59,32 @@ const whatsappCO = '573138914271';
                 </div>
               </div>
 
-              {/* Campo asistencia */}
+              {/* Campo país */}
               <div class="rsvp-field">
                 <span class="rsvp-label">
                   <span class="rsvp-label-num">02</span>
+                  ¿De qué país nos acompañas?
+                </span>
+                <div class="rsvp-choices" style="flex-direction: row; display: flex;">
+                  <label class="rsvp-choice" style="flex: 1;">
+                    <input type="radio" name="country" value="MX" required class="rsvp-radio" checked />
+                    <span class="rsvp-choice-box" style="justify-content: center;">
+                      <span class="rsvp-choice-text">🇲🇽 México</span>
+                    </span>
+                  </label>
+                  <label class="rsvp-choice" style="flex: 1;">
+                    <input type="radio" name="country" value="CO" class="rsvp-radio" />
+                    <span class="rsvp-choice-box" style="justify-content: center;">
+                      <span class="rsvp-choice-text">🇨🇴 Colombia</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Campo asistencia */}
+              <div class="rsvp-field">
+                <span class="rsvp-label">
+                  <span class="rsvp-label-num">03</span>
                   ¿Nos acompañarás?
                 </span>
                 <div class="rsvp-choices">
@@ -84,7 +106,7 @@ const whatsappCO = '573138914271';
               {/* Campo canción */}
               <div class="rsvp-field">
                 <label for="rsvp-song" class="rsvp-label">
-                  <span class="rsvp-label-num">03</span>
+                  <span class="rsvp-label-num">04</span>
                   ¿Qué canción no puede faltar?
                 </label>
                 <input
@@ -772,8 +794,9 @@ const whatsappCO = '573138914271';
       const songInput = document.getElementById('rsvp-song') as HTMLInputElement;
       const song = songInput ? songInput.value.trim() : '';
       
-      // Determinar país según el tab activo
-      const pais = tabMX?.classList.contains('active') ? 'MX' : 'CO';
+      // Determinar país según el radio seleccionado
+      const countryInput = document.querySelector('input[name="country"]:checked') as HTMLInputElement;
+      const pais = countryInput ? countryInput.value : 'MX';
 
       try {
         const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
@@ -830,6 +853,14 @@ const whatsappCO = '573138914271';
           if (going) {
             successYes?.classList.remove('hidden');
             successYes?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // Mostrar la cuenta correcta automáticamente
+            if (pais === 'CO') {
+              tabCO?.click();
+            } else {
+              tabMX?.click();
+            }
+
           } else {
             successNo?.classList.remove('hidden');
             successNo?.scrollIntoView({ behavior: 'smooth', block: 'center' });
