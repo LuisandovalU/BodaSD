@@ -837,7 +837,12 @@ const whatsappCO = '573138914271';
         }, 450);
       } catch (error) {
         console.error("Error saving to Firebase:", error);
-        alert("Hubo un error al enviar tu confirmación. Por favor intenta de nuevo.");
+        const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Confirmar Asistencia';
+        }
+        alert("Hubo un error al enviar tu confirmación. Revisa tu conexión a internet o intenta de nuevo.");
       }
     });
   });
