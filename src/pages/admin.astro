@@ -619,7 +619,10 @@
     }
   </style>
 
-  <script is:inline>
+  <script>
+    import { db } from '../firebase/client';
+    import { collection, onSnapshot, doc, updateDoc } from 'firebase/firestore';
+
     const ADMIN_PASS = 'bodasd2026';
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -631,24 +634,26 @@
       const emptyState = document.getElementById('empty-state');
       const btnLogout = document.getElementById('btn-logout');
 
+      let registros: any[] = [];
+
       // Auth check
       if (sessionStorage.getItem('admin_auth') === 'true') {
         if (loginScreen) loginScreen.style.display = 'none';
         if (dashboard) dashboard.style.display = 'block';
-        renderAll();
+        initFirebaseListener();
       }
 
       if (loginForm) {
         loginForm.addEventListener('submit', (e) => {
           e.preventDefault();
-          const passInput = document.getElementById('login-pass');
+          const passInput = document.getElementById('login-pass') as HTMLInputElement;
           const pass = passInput ? passInput.value : '';
           
           if (pass === ADMIN_PASS) {
             sessionStorage.setItem('admin_auth', 'true');
             if (loginScreen) loginScreen.style.display = 'none';
             if (dashboard) dashboard.style.display = 'block';
-            renderAll();
+            initFirebaseListener();
           } else {
             if (loginError) {
               loginError.style.display = 'block';
@@ -671,21 +676,24 @@
         tab.addEventListener('click', () => {
           document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
           tab.classList.add('active');
-          currentFilter = tab.dataset.filter || 'all';
+          currentFilter = (tab as HTMLElement).dataset.filter || 'all';
           renderGuests();
         });
       });
 
-      function getRegistros() {
-        try {
-          return JSON.parse(localStorage.getItem('rsvp_registros') || '[]');
-        } catch(e) {
-          return [];
-        }
-      }
-
-      function saveRegistros(registros) {
-        localStorage.setItem('rsvp_registros', JSON.stringify(registros));
+      function initFirebaseListener() {
+        const guestsRef = collection(db, 'invitados');
+        onSnapshot(guestsRef, (snapshot) => {
+          registros = [];
+          snapshot.forEach((docSnap) => {
+            registros.push({ id: docSnap.id, ...docSnap.data() });
+          });
+          // Order by date descending
+          registros.sort((a, b) => new Date(b.fechaRegistro).getTime() - new Date(a.fechaRegistro).getTime());
+          renderAll();
+        }, (error) => {
+          console.error("Error listening to Firestore:", error);
+        });
       }
 
       function renderAll() {
@@ -693,10 +701,10 @@
         renderGuests();
       }
 
+      // @ts-ignore
       window.renderAll = renderAll; // expose to modal
 
       function renderStats() {
-        const registros = getRegistros();
         const total = registros.length;
         const yes = registros.filter(r => r.asiste).length;
         const no = total - yes;
@@ -714,8 +722,6 @@
       }
 
       function renderGuests() {
-        const registros = getRegistros();
-        
         let filtered = registros;
         if (currentFilter === 'yes') filtered = registros.filter(r => r.asiste);
         else if (currentFilter === 'no') filtered = registros.filter(r => !r.asiste);
@@ -735,18 +741,18 @@
         if (emptyState) emptyState.style.display = 'none';
 
         filtered.forEach((r, i) => {
-          const fecha = new Date(r.fecha);
+          const fecha = new Date(r.fechaRegistro || r.fecha);
           const fechaStr = isNaN(fecha.getTime()) ? '' : fecha.toLocaleDateString('es-MX', {
             day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
           });
-          const initials = r.nombre ? r.nombre.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase() : '??';
+          const initials = r.nombre ? r.nombre.split(' ').map((w: string) => w[0]).slice(0, 2).join('').toUpperCase() : '??';
 
           const card = document.createElement('div');
           card.className = 'guest-card';
           card.style.animationDelay = `${i * 0.05}s`;
 
-          // Para saber el índice real en el array original y poder actualizarlo
-          const realIndex = registros.findIndex(reg => reg.nombre === r.nombre && reg.fecha === r.fecha);
+          // Usamos el ID del documento de Firebase
+          const docId = r.id;
 
           const paymentBtn = r.asiste
             ? r.pagado
@@ -754,7 +760,7 @@
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   Pagado
                 </button>`
-              : `<button class="btn-payment btn-payment-pending" data-idx="${realIndex}">
+              : `<button class="btn-payment btn-payment-pending" data-id="${docId}">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   Sin pago
                 </button>`
@@ -765,7 +771,7 @@
               <div class="guest-info">
                 <div class="guest-avatar ${r.asiste ? 'guest-avatar-yes' : 'guest-avatar-no'}">${initials}</div>
                 <div>
-                  <div class="guest-name">${r.nombre}</div>
+                  <div class="guest-name">${r.nombreCompleto || r.nombre}</div>
                   <div class="guest-date">${fechaStr}</div>
                 </div>
               </div>
@@ -787,17 +793,17 @@
         if (guestList) {
           guestList.querySelectorAll('.btn-payment-pending').forEach(btn => {
             btn.addEventListener('click', () => {
-              const idx = parseInt(btn.dataset.idx || '0');
-              const reg = getRegistros()[idx];
+              const docId = (btn as HTMLElement).dataset.id || '';
+              const reg = registros.find(r => r.id === docId);
               if (reg) {
-                showConfirmModal(reg.nombre, idx);
+                showConfirmModal(reg.nombreCompleto || reg.nombre, docId);
               }
             });
           });
         }
       }
 
-      function showConfirmModal(nombre, idx) {
+      function showConfirmModal(nombre: string, docId: string) {
         const overlay = document.createElement('div');
         overlay.className = 'modal-overlay';
         overlay.innerHTML = `
@@ -825,14 +831,22 @@
 
         const btnConfirm = document.getElementById('modal-confirm');
         if (btnConfirm) {
-          btnConfirm.addEventListener('click', () => {
-            const registros = getRegistros();
-            if (registros[idx]) {
-              registros[idx].pagado = true;
-              saveRegistros(registros);
+          btnConfirm.addEventListener('click', async () => {
+            const btnText = btnConfirm.innerHTML;
+            btnConfirm.innerHTML = 'Guardando...';
+            (btnConfirm as HTMLButtonElement).disabled = true;
+
+            try {
+              await updateDoc(doc(db, 'invitados', docId), {
+                pagado: true
+              });
+              overlay.remove();
+            } catch (err) {
+              console.error("Error confirmando pago:", err);
+              btnConfirm.innerHTML = btnText;
+              (btnConfirm as HTMLButtonElement).disabled = false;
+              alert("Hubo un error. Intenta de nuevo.");
             }
-            overlay.remove();
-            if (window.renderAll) window.renderAll();
           });
         }
       }

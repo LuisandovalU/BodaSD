@@ -705,13 +705,17 @@ const whatsappCO = '573138914271';
 </style>
 
 <script>
+  import { db } from '../firebase/client';
+  import { collection, query, where, getDocs, addDoc, updateDoc, doc } from 'firebase/firestore';
+
   document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('rsvp-form');
+    const rsvpBtn = document.getElementById('btn-rsvp');
     const formView = document.getElementById('rsvp-form-view');
     const successYes = document.getElementById('rsvp-success-yes');
     const successNo = document.getElementById('rsvp-success-no');
+    const form = document.getElementById('rsvp-form');
 
-    // Country tab switching
+    // Manejo de tabs de bancos
     const tabMX = document.getElementById('tab-mx');
     const tabCO = document.getElementById('tab-co');
     const paymentMX = document.getElementById('payment-mx');
@@ -736,7 +740,7 @@ const whatsappCO = '573138914271';
     });
 
     // Form submission
-    form?.addEventListener('submit', (e) => {
+    form?.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const nameInput = document.getElementById('rsvp-name') as HTMLInputElement;
@@ -768,34 +772,68 @@ const whatsappCO = '573138914271';
       const songInput = document.getElementById('rsvp-song') as HTMLInputElement;
       const song = songInput ? songInput.value.trim() : '';
 
-      // Guardar en localStorage (demo temporal — será Firebase)
-      const registros = JSON.parse(localStorage.getItem('rsvp_registros') || '[]');
-      registros.push({
-        nombre: fullName,
-        asiste: going,
-        cancion: song || '—',
-        fecha: new Date().toISOString()
-      });
-      localStorage.setItem('rsvp_registros', JSON.stringify(registros));
-
-      // Ocultar formulario con fade
-      if (formView) {
-        formView.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-        formView.style.opacity = '0';
-        formView.style.transform = 'translateY(-20px)';
-      }
-
-      setTimeout(() => {
-        formView?.classList.add('hidden');
-        
-        if (going) {
-          successYes?.classList.remove('hidden');
-          successYes?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-          successNo?.classList.remove('hidden');
-          successNo?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      try {
+        const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = 'Enviando...';
         }
-      }, 450);
+
+        const normalizedName = name.toLowerCase();
+        const normalizedLastName = lastName.toLowerCase();
+        
+        const guestsRef = collection(db, 'invitados');
+        const q = query(guestsRef, where('nombreNormalizado', '==', normalizedName), where('apellidoNormalizado', '==', normalizedLastName));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const guestDoc = querySnapshot.docs[0];
+          await updateDoc(doc(db, 'invitados', guestDoc.id), {
+            asiste: going,
+            cancion: song || '—',
+            fechaActualizacion: new Date().toISOString()
+          });
+        } else {
+          await addDoc(guestsRef, {
+            nombre: name,
+            apellido: lastName,
+            nombreNormalizado: normalizedName,
+            apellidoNormalizado: normalizedLastName,
+            nombreCompleto: fullName,
+            asiste: going,
+            cancion: song || '—',
+            fechaRegistro: new Date().toISOString()
+          });
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnText;
+        }
+
+        // Ocultar formulario con fade
+        if (formView) {
+          formView.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          formView.style.opacity = '0';
+          formView.style.transform = 'translateY(-20px)';
+        }
+
+        setTimeout(() => {
+          formView?.classList.add('hidden');
+          
+          if (going) {
+            successYes?.classList.remove('hidden');
+            successYes?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            successNo?.classList.remove('hidden');
+            successNo?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 450);
+      } catch (error) {
+        console.error("Error saving to Firebase:", error);
+        alert("Hubo un error al enviar tu confirmación. Por favor intenta de nuevo.");
+      }
     });
   });
 </script>
