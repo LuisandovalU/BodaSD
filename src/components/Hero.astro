@@ -17,10 +17,10 @@ import { Image } from 'astro:assets';
       {/* Gradiente oscuro sutil para darle profundidad */}
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 mix-blend-overlay"></div>
       
-      {/* INDICADOR DE SCROLL (Solo móvil para que entiendan que deben bajar) */}
-      <div class="absolute bottom-8 left-0 w-full flex flex-col items-center justify-center z-20 animate-bounce text-white/80 drop-shadow-md lg:hidden" id="scroll-indicator">
-        <span class="font-serif text-[10px] tracking-[0.2em] uppercase mb-1 drop-shadow-lg">Desliza para abrir</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5 drop-shadow-lg"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+      {/* INDICADOR DE SCROLL */}
+      <div class="absolute bottom-4 left-0 w-full flex flex-col items-center justify-center z-50 animate-bounce text-white drop-shadow-2xl" id="scroll-indicator">
+        <span class="font-serif text-[11px] md:text-xs tracking-[0.25em] uppercase mb-2">Desliza para abrir</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
       </div>
     </div>
 
