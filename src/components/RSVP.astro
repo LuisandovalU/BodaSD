@@ -15,16 +15,22 @@ const whatsappCO = '573138914271';
     <div id="rsvp-form-view" class="w-full">
       <div class="w-full flex flex-col lg:flex-row lg:items-start lg:justify-center gap-10 lg:gap-16 px-4">
         {/* Izquierda en Desktop: Imagen y subtítulo */}
-        <div class="rsvp-header flex-1 flex flex-col items-center lg:items-start lg:mt-10">
+        <div class="rsvp-header flex-1 flex flex-col items-center justify-center lg:pr-8">
           <img 
             src="/confirma.webp" 
             alt="Confirmación de Asistencia" 
-            class="rsvp-header-img lg:origin-left" 
+            class="rsvp-header-img origin-center" 
           />
-          <p class="rsvp-subtitle lg:text-left mt-6">¡Nos encantaría celebrar contigo!</p>
-          <p class="font-sans text-[9px] md:text-[10px] tracking-[0.2em] uppercase text-[#c5a059] mt-4 font-semibold text-center lg:text-left [text-wrap:balance]">
-            Fecha límite de confirmación:<br/>20 de Agosto
-          </p>
+          <p class="rsvp-subtitle text-center mt-6">¡Nos encantaría celebrar contigo!</p>
+          
+          <div class="mt-8 flex flex-col items-center text-center">
+            <p class="font-sans text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#6b1424] font-semibold mb-2">
+              Fecha límite de confirmación
+            </p>
+            <p class="font-serif text-sm md:text-lg tracking-[0.2em] uppercase text-[#c5a059] font-bold">
+              20 de Agosto
+            </p>
+          </div>
         </div>
 
         {/* Derecha en Desktop: Formulario */}
