@@ -58,7 +58,7 @@ export default function ColorPalette({ colors, title, isBanned = false }: ColorP
       {/* Selected color name display */}
       <div className="h-6 mt-4 flex items-center justify-center">
         <AnimatePresence mode="wait">
-          {selectedIndex !== null && (
+          {selectedIndex !== null ? (
             <motion.p 
               key={selectedIndex}
               initial={{ opacity: 0, y: -5 }}
@@ -67,6 +67,16 @@ export default function ColorPalette({ colors, title, isBanned = false }: ColorP
               className={`font-serif text-[10px] md:text-xs tracking-[0.2em] uppercase font-semibold ${isBanned ? 'text-red-400' : 'text-[#e2c589]'}`}
             >
               {colors[selectedIndex].name}
+            </motion.p>
+          ) : (
+            <motion.p 
+              key="default-text"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="font-serif text-[9px] md:text-[10px] tracking-[0.15em] uppercase text-white/70"
+            >
+              Toca un color para descubrirlo
             </motion.p>
           )}
         </AnimatePresence>
