@@ -124,8 +124,8 @@ import { Image } from 'astro:assets';
   </div>
 
 
-  {/* INDICADOR FIJO (Desaparece al tocar) */}
-  <div id="tap-indicator" class="fixed bottom-6 left-0 w-full flex flex-col items-center justify-center z-[100] animate-bounce text-white drop-shadow-2xl transition-opacity duration-500">
+  {/* INDICADOR FIJO (Desaparece al tocar o scrollear) */}
+  <div id="tap-indicator" class="fixed bottom-6 left-0 w-full flex flex-col items-center justify-center z-40 animate-bounce text-white drop-shadow-2xl transition-opacity duration-500 opacity-0 pointer-events-none delay-1000">
     <span class="font-serif text-[10px] md:text-xs tracking-[0.25em] uppercase mb-2">Desliza para continuar</span>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
   </div>
@@ -134,11 +134,29 @@ import { Image } from 'astro:assets';
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const indicator = document.getElementById('tap-indicator');
+    const overlay = document.getElementById('intro-overlay');
     if (!indicator) return;
 
     let hasTouched = false;
+    let overlayIsGone = false;
+
+    // Mostrar el indicador solo después de que quitan el Intro
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        setTimeout(() => {
+          overlayIsGone = true;
+          if (!hasTouched) {
+            indicator.style.opacity = '1';
+          }
+        }, 1500); // Esperar a que salga la carta blanca
+      });
+    } else {
+      overlayIsGone = true;
+      indicator.style.opacity = '1';
+    }
 
     const hideIndicator = () => {
+      if (!overlayIsGone) return;
       if (!hasTouched) {
         hasTouched = true;
         indicator.style.opacity = '0';
@@ -148,15 +166,13 @@ import { Image } from 'astro:assets';
 
     // Ocultar al primer toque o scroll
     window.addEventListener('touchstart', hideIndicator, { passive: true });
-    window.addEventListener('click', hideIndicator, { passive: true });
     window.addEventListener('scroll', hideIndicator, { passive: true });
 
     // Reaparecer al volver hasta arriba
     window.addEventListener('scroll', () => {
-      if (window.scrollY < 20) {
+      if (window.scrollY < 20 && overlayIsGone) {
         hasTouched = false;
         indicator.style.opacity = '1';
-        indicator.style.pointerEvents = 'auto';
       }
     }, { passive: true });
   });
