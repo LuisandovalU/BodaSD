@@ -21,10 +21,10 @@ const whatsappCO = '573138914271';
             alt="Confirmación de Asistencia" 
             class="rsvp-header-img origin-center" 
           />
-          <p class="rsvp-subtitle text-center mt-20 lg:mt-32">¡Nos encantaría celebrar contigo!</p>
+          <p class="rsvp-subtitle text-center mt-8 lg:mt-10">¡Nos encantaría celebrar contigo!</p>
           
-          <div class="mt-12 lg:mt-16 flex flex-col items-center text-center">
-            <p class="font-sans text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#6b1424] font-semibold mb-2">
+          <div class="rsvp-date-block flex flex-col items-center text-center">
+            <p class="font-sans text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-[#6b1424] font-semibold mb-3">
               Fecha límite de confirmación
             </p>
             <p class="font-serif text-sm md:text-lg tracking-[0.2em] uppercase text-[#c5a059] font-bold">
@@ -133,6 +133,13 @@ const whatsappCO = '573138914271';
               </button>
             </form>
           </div>
+
+          {/* Enlace ver datos de pago */}
+          <button id="btn-ver-pago" class="rsvp-ver-pago">
+            ¿Ya confirmaste tu asistencia?
+            <span class="rsvp-ver-pago-link">Ver datos de pago →</span>
+          </button>
+
         </div>
       </div>
     </div>
@@ -213,6 +220,12 @@ const whatsappCO = '573138914271';
             <span>Enviar a Colombia</span>
           </a>
         </div>
+
+        {/* Botón regresar */}
+        <button id="btn-regresar" class="rsvp-btn-regresar">
+          ← Regresar al formulario
+        </button>
+
       </div>
     </div>
 
@@ -293,7 +306,7 @@ const whatsappCO = '573138914271';
 
   .rsvp-header-img {
     width: 90%;
-    max-width: 420px;
+    max-width: 320px;
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 2px 8px rgba(107,20,36,0.2));
@@ -306,6 +319,20 @@ const whatsappCO = '573138914271';
     text-transform: uppercase;
     color: #4a0d18;
     margin: 0;
+    margin-top: 1.5rem;
+  }
+
+  .rsvp-date-block {
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    .rsvp-subtitle {
+      margin-top: 2.5rem;
+    }
+    .rsvp-date-block {
+      margin-top: 2rem;
+    }
   }
 
   /* Card */
@@ -730,6 +757,58 @@ const whatsappCO = '573138914271';
   .hidden {
     display: none !important;
   }
+
+  /* Ver datos de pago */
+  .rsvp-ver-pago {
+    display: block;
+    width: 100%;
+    margin-top: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    color: #8a7a6d;
+    text-align: center;
+    padding: 0.5rem;
+    transition: color 0.2s ease;
+  }
+
+  .rsvp-ver-pago:hover {
+    color: #6b1424;
+  }
+
+  .rsvp-ver-pago-link {
+    color: #a01020;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    margin-left: 0.25rem;
+  }
+
+  /* Regresar al formulario */
+  .rsvp-btn-regresar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    background: none;
+    border: 1px solid rgba(107,20,36,0.2);
+    border-radius: 50px;
+    padding: 0.5rem 1.25rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    color: #8a7a6d;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: all 0.25s ease;
+  }
+
+  .rsvp-btn-regresar:hover {
+    border-color: #6b1424;
+    color: #6b1424;
+    background: rgba(107,20,36,0.04);
+  }
 </style>
 
 <script>
@@ -742,6 +821,27 @@ const whatsappCO = '573138914271';
     const successYes = document.getElementById('rsvp-success-yes');
     const successNo = document.getElementById('rsvp-success-no');
     const form = document.getElementById('rsvp-form');
+    const btnVerPago = document.getElementById('btn-ver-pago');
+
+    // Botón "¿Ya confirmaste? Ver datos de pago"
+    btnVerPago?.addEventListener('click', () => {
+      formView?.classList.add('hidden');
+      successYes?.classList.remove('hidden');
+      successYes?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    // Botón regresar al formulario
+    const btnRegresar = document.getElementById('btn-regresar');
+    btnRegresar?.addEventListener('click', () => {
+      successYes?.classList.add('hidden');
+      successNo?.classList.add('hidden');
+      if (formView) {
+        formView.style.opacity = '1';
+        formView.style.transform = 'none';
+        formView.classList.remove('hidden');
+      }
+      formView?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     // Manejo de tabs de bancos
     const tabMX = document.getElementById('tab-mx');
